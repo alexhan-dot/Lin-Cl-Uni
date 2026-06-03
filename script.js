@@ -41,7 +41,7 @@ function loadSiteData() {
   const defaults = clone(window.LINEAGE_SITE_DATA || {});
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-    return saved ? mergeData(defaults, saved) : defaults;
+    return saved?.version === defaults.version ? mergeData(defaults, saved) : defaults;
   } catch {
     return defaults;
   }
@@ -231,6 +231,76 @@ function renderUrgency() {
   }
 }
 
+function renderProof() {
+  const section = document.querySelector("[data-proof-section]");
+  const proof = siteData.proof || {};
+  if (!section) return;
+
+  section.innerHTML = `
+    <div class="section-head">
+      <p class="eyebrow">${escapeHtml(proof.eyebrow)}</p>
+      <h2>${escapeHtml(proof.title)}</h2>
+      <p>${escapeHtml(proof.text)}</p>
+    </div>
+    <div class="proof-metrics">
+      ${(proof.metrics || [])
+        .map(
+          (metric) => `
+            <div>
+              <strong>${escapeHtml(metric.value)}</strong>
+              <span>${escapeHtml(metric.label)}</span>
+            </div>
+          `,
+        )
+        .join("")}
+    </div>
+    <div class="proof-grid">
+      ${(proof.cards || [])
+        .map(
+          (card) => `
+            <article>
+              <h3>${escapeHtml(card.title)}</h3>
+              <p>${escapeHtml(card.text)}</p>
+            </article>
+          `,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function renderGuarantee() {
+  const section = document.querySelector("[data-guarantee-section]");
+  const guarantee = siteData.guarantee || {};
+  if (!section) return;
+
+  section.innerHTML = `
+    <div class="guarantee-copy">
+      <p class="eyebrow">${escapeHtml(guarantee.eyebrow)}</p>
+      <h2>${escapeHtml(guarantee.title)}</h2>
+      <p>${escapeHtml(guarantee.text)}</p>
+      <a class="button kakao" href="#contact" data-kakao-chat>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 5C6.9 5 3 8.1 3 12c0 2.5 1.6 4.7 4 5.9L6.4 21l3.3-1.8c.7.1 1.5.2 2.3.2 5.1 0 9-3.1 9-7s-3.9-7.4-9-7.4Z" />
+        </svg>
+        보상 기준 상담하기
+      </a>
+    </div>
+    <div class="guarantee-list">
+      ${(guarantee.items || [])
+        .map(
+          (item) => `
+            <article>
+              <h3>${escapeHtml(item.title)}</h3>
+              <p>${escapeHtml(item.text)}</p>
+            </article>
+          `,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
 function renderPrograms() {
   const section = document.querySelector("#programs");
   const programs = siteData.programs || {};
@@ -362,6 +432,70 @@ function renderFaq() {
     .join("");
 }
 
+function renderMedia() {
+  const section = document.querySelector("[data-media-section]");
+  const media = siteData.media || {};
+  if (!section) return;
+
+  section.innerHTML = `
+    <div class="section-head">
+      <p class="eyebrow">${escapeHtml(media.eyebrow)}</p>
+      <h2>${escapeHtml(media.title)}</h2>
+      <p>${escapeHtml(media.text)}</p>
+    </div>
+    <div class="media-layout">
+      <div class="media-videos">
+        ${(media.videos || [])
+          .map(
+            (video) => `
+              <article class="video-card">
+                <div class="video-frame">
+                  <iframe
+                    src="https://www.youtube.com/embed/${escapeHtml(video.youtubeId)}"
+                    title="${escapeHtml(video.title)}"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <h3>${escapeHtml(video.title)}</h3>
+                <a class="text-link" href="${escapeHtml(video.source)}" target="_blank" rel="noopener noreferrer">원본 영상 보기</a>
+              </article>
+            `,
+          )
+          .join("")}
+      </div>
+      <div class="media-images">
+        ${(media.images || [])
+          .map(
+            (image) => `
+              <article class="image-card ${image.fit === "contain" ? "contain-image" : ""}">
+                <img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.title)}" loading="lazy" />
+                <div>
+                  <h3>${escapeHtml(image.title)}</h3>
+                  <a class="text-link" href="${escapeHtml(image.source)}" target="_blank" rel="noopener noreferrer">출처 보기</a>
+                </div>
+              </article>
+            `,
+          )
+          .join("")}
+      </div>
+    </div>
+    <div class="official-source">
+      <p>${escapeHtml(media.sourceNote)}</p>
+      <div>
+        ${(media.links || [])
+          .map(
+            (link) => `
+              <a href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>
+            `,
+          )
+          .join("")}
+      </div>
+    </div>
+  `;
+}
+
 function renderContact() {
   const section = document.querySelector("#contact");
   const contactSection = siteData.contactSection || {};
@@ -416,10 +550,13 @@ function renderSite() {
   renderHero();
   renderNotices();
   renderUrgency();
+  renderProof();
+  renderGuarantee();
   renderPrograms();
   renderOperations();
   renderPricing();
   renderFaq();
+  renderMedia();
   renderContact();
   renderFooter();
   setupKakaoChat();

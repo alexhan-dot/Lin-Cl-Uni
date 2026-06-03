@@ -28,7 +28,7 @@ function getSavedData() {
   const defaults = adminClone(window.LINEAGE_SITE_DATA || {});
   try {
     const saved = JSON.parse(localStorage.getItem(ADMIN_STORAGE_KEY) || "null");
-    return saved ? adminMergeData(defaults, saved) : defaults;
+    return saved?.version === defaults.version ? adminMergeData(defaults, saved) : defaults;
   } catch {
     return defaults;
   }

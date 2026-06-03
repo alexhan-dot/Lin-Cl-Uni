@@ -1,8 +1,9 @@
 window.LINEAGE_SITE_DATA = {
+  version: 2,
   meta: {
     title: "리니지 클래식 대학교",
     description:
-      "리니지 클래식 대학교 - 클래식 서버 성장 루트, 장비 정리, 운영 리포트를 한 번에 관리하는 프리미엄 상담형 서비스.",
+      "리니지 클래식 대학교 - 110명 수동 운영반이 8시간 1타임 기준으로 리니지 클래식 캐릭터 운전, 성장 루트, 라인 캐릭 전담 운영을 지원합니다.",
   },
   brand: {
     name: "리니지 클래식 대학교",
@@ -14,43 +15,43 @@ window.LINEAGE_SITE_DATA = {
   },
   nav: ["전공 과정", "운영 방식", "수강료", "입학 상담"],
   hero: {
-    eyebrow: "클래식 서버 성장 컨설팅",
+    eyebrow: "110명 수동 운영반 · 자동 프로그램 사용 없음",
     title: "리니지 클래식 대학교",
     lede:
-      "막막한 성장 구간, 장비 정리, 사냥터 루트를 전담 매니저가 설계합니다. 상담부터 운영 리포트까지 한 곳에서 확인하는 프리미엄 캠퍼스입니다.",
-    kakaoCta: "카카오톡으로 대화하기",
-    consultCta: "입학 상담 신청",
-    curriculumCta: "커리큘럼 보기",
+      "타섭 네임드 요정·기사 캐릭 다수 운전 경험과 라인 캐릭 전담 운영반 경험을 바탕으로, 8시간 단위 성장 운전을 사람 손으로만 진행합니다.",
+    kakaoCta: "지금 8시간 타임 예약",
+    consultCta: "가격표 확인",
+    curriculumCta: "수동 운영 원칙",
   },
   status: {
-    label: "오늘 상담 가능",
-    value: "9석",
+    label: "현재 운영 인원",
+    value: "110명",
     stats: [
-      { label: "평균 배정", value: "12분" },
-      { label: "리포트 주기", value: "30분" },
-      { label: "운영 체크", value: "4단계" },
+      { label: "1타임 기준", value: "8시간" },
+      { label: "단기 고객", value: "5만원" },
+      { label: "장기 고객", value: "4.5만원" },
     ],
-    lineLabel: "실시간 접수",
+    lineLabel: "수동 운영 좌석 확인중",
   },
   urgency: {
     enabled: true,
     eyebrow: "Loss Alert",
-    ribbon: "오늘 상담 좌석 기준",
-    title: "지금 시작하지 않으면 손해가 누적됩니다",
+    ribbon: "8시간 타임 배정 기준",
+    title: "지금 비워두는 시간이 그대로 손해입니다",
     text:
-      "클래식 서버는 하루만 늦어도 사냥터 경쟁, 장비 시세, 혈맹 일정이 달라집니다. 지금 상담하면 현재 캐릭터 상태 기준으로 가장 덜 손해 보는 성장 루트를 바로 잡아드립니다.",
-    primaryCta: "지금 손해 막고 상담하기",
-    secondaryCta: "오늘 좌석 확인",
-    deadlineLabel: "오늘 마감 전",
-    deadlineValue: "빠른 진단 가능",
-    slotLabel: "상담 가능 좌석",
-    slotValue: "9석",
+      "리니지 클래식은 접속하지 않은 시간에도 사냥터 자리, 시세, 라인 일정이 움직입니다. 지금 8시간 타임을 잡으면 110명 운영반 중 가능한 인원을 확인해 수동 운전으로 배정합니다.",
+    primaryCta: "지금 타임 배정 상담",
+    secondaryCta: "수동 운영 원칙 보기",
+    deadlineLabel: "1타임 운전",
+    deadlineValue: "8시간",
+    slotLabel: "운영 인원",
+    slotValue: "110명",
     lossTitle: "미루는 동안 생기는 손실",
-    lossText: "루트 없이 접속하면 경험치, 아데나, 장비 판단이 동시에 새어 나갑니다.",
+    lossText: "빈 시간은 경험치, 아데나, 보스 일정, 장비 판단까지 한꺼번에 밀립니다.",
     stats: [
-      { label: "진단 대기", value: "12분" },
-      { label: "리포트 공유", value: "30분" },
-      { label: "오늘 상담", value: "9석" },
+      { label: "단기 고객", value: "5만원" },
+      { label: "장기 고객", value: "4.5만원" },
+      { label: "자동 프로그램", value: "0회" },
     ],
     losses: [
       {
@@ -66,10 +67,64 @@ window.LINEAGE_SITE_DATA = {
         text: "목표 없이 하루를 넘기면 다음 보스, 파티, 혈맹 일정까지 밀립니다.",
       },
     ],
-    stripLabel: "오늘 바로 시작",
-    stripTitle: "지금 상담하지 않으면 내일 더 비싸게 돌아올 수 있습니다",
-    stripText: "현재 좌석과 캐릭터 상태를 먼저 확인하세요.",
-    stripCta: "카카오톡으로 바로 상담",
+    stripLabel: "8시간 타임 상담",
+    stripTitle: "지금 비우는 접속 시간이 그대로 성장 손해입니다",
+    stripText: "단기 5만원, 장기 4만5천원 기준으로 바로 상담하세요.",
+    stripCta: "카카오톡으로 타임 예약",
+  },
+  proof: {
+    eyebrow: "Manual Operation",
+    title: "110명 사람이 직접 운전하는 전담 운영반",
+    text:
+      "자동 프로그램, 매크로, 비인가 도구를 쓰지 않습니다. 사람이 직접 화면을 보고 사냥터, 물약, 귀환, 라인 상황을 판단합니다.",
+    metrics: [
+      { value: "110명", label: "현재 운영 직원" },
+      { value: "0회", label: "자동 프로그램 사용" },
+      { value: "8시간", label: "1타임 운전 기준" },
+      { value: "다수", label: "네임드 요정·기사 운전 경험" },
+    ],
+    cards: [
+      {
+        title: "타섭 네임드 캐릭 운전 경험",
+        text: "요정·기사 캐릭터를 포함해 여러 서버 네임드 캐릭 운전 경험이 있는 인력 중심으로 배정합니다.",
+      },
+      {
+        title: "라인 캐릭 전담 운영반",
+        text: "혈맹/라인 일정, 사냥터 경쟁, 보스 타임을 이해하는 운영 경험을 기준으로 상황 대응을 진행합니다.",
+      },
+      {
+        title: "100% 사람 손 플레이",
+        text: "자동 사냥, 매크로, 비인가 프로그램 없이 담당자가 직접 조작하며 이상 상황을 즉시 판단합니다.",
+      },
+      {
+        title: "운전시간 리포트",
+        text: "8시간 타임 기준으로 진행 시간, 주요 획득/소모, 특이사항을 상담 채널로 정리합니다.",
+      },
+    ],
+  },
+  guarantee: {
+    eyebrow: "Care Policy",
+    title: "죽음 페널티 보상 서비스",
+    text:
+      "운영 중 담당자 귀책으로 발생한 사망은 사전 협의 기준에 따라 운전시간 보상으로 처리합니다. 위험 사냥터, 전쟁/라인 상황, 서버 장애 등 외부 변수는 상담 단계에서 기준을 먼저 정합니다.",
+    items: [
+      {
+        title: "귀책 사망 운전시간 보상",
+        text: "운영 실수로 확인되는 죽음 페널티는 협의된 기준에 맞춰 추가 운전시간으로 보상합니다.",
+      },
+      {
+        title: "위험 구간 사전 고지",
+        text: "전쟁 지역, 라인 충돌, 사냥터 과밀 구간은 시작 전에 위험도를 안내하고 진행 여부를 확인합니다.",
+      },
+      {
+        title: "계정 보안 우선",
+        text: "불필요한 정보 요청을 줄이고, 접속/운영에 필요한 범위와 전달 방식을 상담에서 먼저 확정합니다.",
+      },
+      {
+        title: "비인가 도구 금지",
+        text: "자동 프로그램을 쓰지 않는 수동 운전 원칙을 운영 기준의 첫 번째로 둡니다.",
+      },
+    ],
   },
   notices: [
     {
@@ -164,31 +219,69 @@ window.LINEAGE_SITE_DATA = {
   ],
   pricing: {
     eyebrow: "Tuition",
-    title: "수강료 안내",
-    text: "캐릭터 상태와 목표 구간에 따라 비용 차이가 크기 때문에 상담 후 확정 견적을 안내합니다.",
+    title: "운전 가격 안내",
+    text: "모든 가격은 8시간 1타임 기준입니다. 장기 고객은 반복 예약 또는 장기 운영 협의 기준으로 적용합니다.",
     cards: [
       {
-        title: "신입생반",
-        price: "상담 후 안내",
-        text: "초반 성장 방향과 장비 정리가 필요한 유저에게 맞춘 기본 과정입니다.",
-        cta: "상담하기",
+        title: "단기 고객",
+        price: "5만원",
+        text: "8시간 1타임 기준 단기 운전입니다. 급한 레벨업, 사냥터 소화, 하루 공백 메우기에 적합합니다.",
+        cta: "단기 타임 상담",
         featured: false,
       },
       {
-        title: "전공반",
-        price: "맞춤 견적",
-        text: "레벨 목표, 장비 세팅, 사냥터 운영을 함께 관리하는 표준 과정입니다.",
-        cta: "상담하기",
+        title: "장기 고객",
+        price: "4만5천원",
+        text: "8시간 1타임 기준 장기 운영 단가입니다. 반복 배정, 라인 일정, 장기 성장 관리에 적합합니다.",
+        cta: "장기 단가 상담",
         tag: "추천",
         featured: true,
       },
       {
-        title: "졸업반",
+        title: "전담 운영반",
         price: "별도 협의",
-        text: "고레벨 구간, 일정 운영, 장기 관리가 필요한 경우 별도 플랜으로 진행합니다.",
-        cta: "상담하기",
+        text: "네임드 요정·기사, 라인 캐릭, 보스/혈맹 일정이 포함된 전담 운영은 범위 확인 후 협의합니다.",
+        cta: "전담반 문의",
         featured: false,
       },
+    ],
+  },
+  media: {
+    eyebrow: "Official Materials",
+    title: "리니지 클래식 공식 자료",
+    text:
+      "공식 리니지 클래식 페이지와 엔씨 보도자료에서 확인한 영상·아트워크 자료입니다. 원본 저작권은 각 권리자에게 있으며, 사이트에서는 출처 링크와 외부 임베드로 안내합니다.",
+    sourceNote:
+      "엔씨 보도자료 기준, 리니지 클래식은 2000년대 초기 버전을 구현한 PC 게임이며 군주·기사·요정·마법사 4종 클래스와 초기 지역 콘텐츠를 특징으로 합니다.",
+    images: [
+      {
+        title: "리니지 클래식 공식 보도 이미지",
+        src: "https://blogfiles.ncsoft.net/news/34494c89-f222-4b6a-b1c3-b00697df72ee.jpg",
+        source: "https://about.ncsoft.com/news/article/lc_update_260102",
+      },
+      {
+        title: "리니지 클래식 공식 로고",
+        src: "https://assets.playnccdn.com/common/lineageclassic.png",
+        source: "https://lineageclassic.plaync.com/ko-kr/index?redirect=false",
+        fit: "contain",
+      },
+    ],
+    videos: [
+      {
+        title: "[리니지 클래식] 혈맹으로 이어진 영웅들 | 트레일러",
+        youtubeId: "EjT9yEv3z0Y",
+        source: "https://www.youtube.com/watch?v=EjT9yEv3z0Y",
+      },
+      {
+        title: "[리니지 클래식] 레전드 토크쇼 말하는 썰 EP3",
+        youtubeId: "P42VTLT7gB0",
+        source: "https://www.youtube.com/watch?v=P42VTLT7gB0",
+      },
+    ],
+    links: [
+      { label: "공식 홈페이지", url: "https://lineageclassic.plaync.com/ko-kr/index?redirect=false" },
+      { label: "공식 유튜브", url: "https://www.youtube.com/@LineageClassicOfficial" },
+      { label: "엔씨 보도자료", url: "https://about.ncsoft.com/news/article/lc_update_260102" },
     ],
   },
   faq: {
