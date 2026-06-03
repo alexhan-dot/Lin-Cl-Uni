@@ -133,6 +133,104 @@ function renderNotices() {
     .join("");
 }
 
+function renderUrgency() {
+  const section = document.querySelector("[data-urgency-section]");
+  const bar = document.querySelector("[data-conversion-bar]");
+  const urgency = siteData.urgency || {};
+
+  if (!urgency.enabled) {
+    section?.setAttribute("hidden", "");
+    bar?.setAttribute("hidden", "");
+    return;
+  }
+
+  section?.removeAttribute("hidden");
+  bar?.removeAttribute("hidden");
+
+  if (section) {
+    section.innerHTML = `
+      <div class="urgency-copy">
+        <p class="eyebrow">${escapeHtml(urgency.eyebrow)}</p>
+        <span class="urgency-ribbon">${escapeHtml(urgency.ribbon)}</span>
+        <h2>${escapeHtml(urgency.title)}</h2>
+        <p>${escapeHtml(urgency.text)}</p>
+        <div class="urgency-actions">
+          <a class="button kakao" href="#contact" data-kakao-chat>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5C6.9 5 3 8.1 3 12c0 2.5 1.6 4.7 4 5.9L6.4 21l3.3-1.8c.7.1 1.5.2 2.3.2 5.1 0 9-3.1 9-7s-3.9-7.4-9-7.4Z" />
+            </svg>
+            ${escapeHtml(urgency.primaryCta)}
+          </a>
+          <a class="button secondary" href="#pricing">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 12h16M12 4v16M6 6l12 12M18 6 6 18" />
+            </svg>
+            ${escapeHtml(urgency.secondaryCta)}
+          </a>
+        </div>
+      </div>
+
+      <div class="urgency-panel">
+        <div class="urgency-panel-top">
+          <div>
+            <span>${escapeHtml(urgency.deadlineLabel)}</span>
+            <strong>${escapeHtml(urgency.deadlineValue)}</strong>
+          </div>
+          <div>
+            <span>${escapeHtml(urgency.slotLabel)}</span>
+            <strong>${escapeHtml(urgency.slotValue)}</strong>
+          </div>
+        </div>
+        <div class="urgency-stat-grid">
+          ${(urgency.stats || [])
+            .map(
+              (stat) => `
+                <div>
+                  <span>${escapeHtml(stat.label)}</span>
+                  <strong>${escapeHtml(stat.value)}</strong>
+                </div>
+              `,
+            )
+            .join("")}
+        </div>
+        <div class="loss-box">
+          <h3>${escapeHtml(urgency.lossTitle)}</h3>
+          <p>${escapeHtml(urgency.lossText)}</p>
+        </div>
+      </div>
+
+      <div class="loss-grid">
+        ${(urgency.losses || [])
+          .map(
+            (item) => `
+              <article>
+                <h3>${escapeHtml(item.title)}</h3>
+                <p>${escapeHtml(item.text)}</p>
+              </article>
+            `,
+          )
+          .join("")}
+      </div>
+    `;
+  }
+
+  if (bar) {
+    bar.innerHTML = `
+      <div class="conversion-copy">
+        <span>${escapeHtml(urgency.stripLabel)}</span>
+        <strong>${escapeHtml(urgency.stripTitle)}</strong>
+        <p>${escapeHtml(urgency.stripText)}</p>
+      </div>
+      <a class="button kakao compact-conversion" href="#contact" data-kakao-chat>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 5C6.9 5 3 8.1 3 12c0 2.5 1.6 4.7 4 5.9L6.4 21l3.3-1.8c.7.1 1.5.2 2.3.2 5.1 0 9-3.1 9-7s-3.9-7.4-9-7.4Z" />
+        </svg>
+        ${escapeHtml(urgency.stripCta)}
+      </a>
+    `;
+  }
+}
+
 function renderPrograms() {
   const section = document.querySelector("#programs");
   const programs = siteData.programs || {};
@@ -275,7 +373,6 @@ function renderContact() {
   setButtonLabel(".contact-actions [data-kakao-chat]", contactSection.kakaoCta);
   setButtonLabel('.contact-actions a[href^="mailto:"]', contactSection.emailCta);
   setButtonLabel('.contact-actions a[href="#top"]', contactSection.topCta);
-  setText(".floating-kakao span", contactSection.floatingCta);
 
   const emailLink = section.querySelector('.contact-actions a[href^="mailto:"]');
   if (emailLink instanceof HTMLAnchorElement && siteData.contact?.email) {
@@ -318,6 +415,7 @@ function renderSite() {
   renderHeader();
   renderHero();
   renderNotices();
+  renderUrgency();
   renderPrograms();
   renderOperations();
   renderPricing();

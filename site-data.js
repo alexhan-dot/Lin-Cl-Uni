@@ -32,6 +32,45 @@ window.LINEAGE_SITE_DATA = {
     ],
     lineLabel: "실시간 접수",
   },
+  urgency: {
+    enabled: true,
+    eyebrow: "Loss Alert",
+    ribbon: "오늘 상담 좌석 기준",
+    title: "지금 시작하지 않으면 손해가 누적됩니다",
+    text:
+      "클래식 서버는 하루만 늦어도 사냥터 경쟁, 장비 시세, 혈맹 일정이 달라집니다. 지금 상담하면 현재 캐릭터 상태 기준으로 가장 덜 손해 보는 성장 루트를 바로 잡아드립니다.",
+    primaryCta: "지금 손해 막고 상담하기",
+    secondaryCta: "오늘 좌석 확인",
+    deadlineLabel: "오늘 마감 전",
+    deadlineValue: "빠른 진단 가능",
+    slotLabel: "상담 가능 좌석",
+    slotValue: "9석",
+    lossTitle: "미루는 동안 생기는 손실",
+    lossText: "루트 없이 접속하면 경험치, 아데나, 장비 판단이 동시에 새어 나갑니다.",
+    stats: [
+      { label: "진단 대기", value: "12분" },
+      { label: "리포트 공유", value: "30분" },
+      { label: "오늘 상담", value: "9석" },
+    ],
+    losses: [
+      {
+        title: "사냥터 효율 손실",
+        text: "캐릭터 상태와 맞지 않는 사냥터를 돌면 물약값과 시간이 같이 빠집니다.",
+      },
+      {
+        title: "장비 판단 손실",
+        text: "팔아야 할 장비와 남겨야 할 장비를 늦게 구분하면 시세 변동을 그대로 맞습니다.",
+      },
+      {
+        title: "성장 격차 손실",
+        text: "목표 없이 하루를 넘기면 다음 보스, 파티, 혈맹 일정까지 밀립니다.",
+      },
+    ],
+    stripLabel: "오늘 바로 시작",
+    stripTitle: "지금 상담하지 않으면 내일 더 비싸게 돌아올 수 있습니다",
+    stripText: "현재 좌석과 캐릭터 상태를 먼저 확인하세요.",
+    stripCta: "카카오톡으로 바로 상담",
+  },
   notices: [
     {
       title: "1:1 입학 상담",

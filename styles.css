@@ -110,8 +110,7 @@ button {
 .brand-mark path,
 .button path,
 .icon-button path,
-.card-icon path,
-.floating-kakao path {
+.card-icon path {
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
@@ -425,6 +424,139 @@ h1 {
 .notice-strip span {
   color: var(--muted);
   font-size: 14px;
+}
+
+.urgency-section {
+  display: grid;
+  width: min(calc(100% - 40px), var(--max));
+  margin: 34px auto 0;
+  grid-template-columns: minmax(0, 0.96fr) minmax(340px, 0.64fr);
+  gap: 18px;
+  padding: clamp(24px, 4vw, 34px);
+  border: 1px solid rgba(255, 180, 96, 0.28);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(159, 73, 50, 0.24), rgba(216, 173, 93, 0.12) 42%, rgba(63, 128, 108, 0.1)),
+    #111310;
+  box-shadow: var(--shadow);
+}
+
+.urgency-copy {
+  align-self: center;
+}
+
+.urgency-ribbon {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 7px 12px;
+  border: 1px solid rgba(255, 180, 96, 0.34);
+  border-radius: 999px;
+  background: rgba(159, 73, 50, 0.24);
+  color: #ffd7ba;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.urgency-copy h2 {
+  max-width: 720px;
+  margin-bottom: 16px;
+  font-size: clamp(34px, 5.4vw, 64px);
+}
+
+.urgency-copy p:not(.eyebrow) {
+  max-width: 720px;
+  color: rgba(245, 239, 226, 0.84);
+  font-size: 17px;
+}
+
+.urgency-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.urgency-panel {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid rgba(245, 239, 226, 0.14);
+  border-radius: var(--radius);
+  background: rgba(8, 10, 10, 0.7);
+}
+
+.urgency-panel-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.urgency-panel-top div,
+.urgency-stat-grid div,
+.loss-box {
+  padding: 14px;
+  border: 1px solid rgba(245, 239, 226, 0.1);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.urgency-panel span,
+.urgency-stat-grid span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--soft);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.urgency-panel strong,
+.urgency-stat-grid strong {
+  color: #fff8ec;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.urgency-panel-top strong {
+  color: var(--gold-strong);
+  font-size: clamp(24px, 4vw, 36px);
+}
+
+.urgency-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.loss-box h3,
+.loss-grid h3 {
+  margin-bottom: 8px;
+  color: #fff8ec;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.loss-box p,
+.loss-grid p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.loss-grid {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.loss-grid article {
+  min-height: 132px;
+  padding: 18px;
+  border: 1px solid rgba(245, 239, 226, 0.12);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.035);
 }
 
 .section {
@@ -818,39 +950,58 @@ details p {
   color: var(--muted);
 }
 
-.floating-kakao {
+.conversion-bar {
   position: fixed;
   right: max(18px, calc((100% - var(--max)) / 2));
-  bottom: 22px;
+  bottom: 18px;
+  left: auto;
   z-index: 30;
-  display: inline-flex;
-  min-height: 54px;
+  display: flex;
+  width: min(620px, calc(100% - 36px));
+  min-height: 74px;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 14px 18px;
-  border: 1px solid rgba(35, 31, 32, 0.2);
-  border-radius: 999px;
-  background: #fee500;
-  color: #231f20;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0 auto;
+  padding: 12px 14px 12px 18px;
+  border: 1px solid rgba(216, 173, 93, 0.38);
+  border-radius: var(--radius);
+  background: rgba(10, 12, 10, 0.94);
+  color: var(--ink);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.36);
-  font-size: 14px;
+  backdrop-filter: blur(18px);
+}
+
+.conversion-copy {
+  min-width: 0;
+}
+
+.conversion-copy span {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--gold-strong);
+  font-size: 12px;
   font-weight: 900;
-  transition:
-    transform 180ms ease,
-    box-shadow 180ms ease;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-.floating-kakao:hover,
-.floating-kakao:focus-visible {
-  transform: translateY(-3px);
-  box-shadow: 0 24px 62px rgba(0, 0, 0, 0.46);
-  outline: 0;
+.conversion-copy strong {
+  display: block;
+  color: #fff8ec;
+  font-size: clamp(15px, 2vw, 19px);
+  font-weight: 900;
+  line-height: 1.25;
 }
 
-.floating-kakao svg {
-  width: 22px;
-  height: 22px;
+.conversion-copy p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.compact-conversion {
+  min-width: 232px;
   flex: 0 0 auto;
 }
 
@@ -862,7 +1013,7 @@ details p {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 28px 0;
+  padding: 28px 0 118px;
   border-top: 1px solid var(--line);
   color: var(--soft);
   font-size: 13px;
@@ -946,6 +1097,7 @@ details p {
   }
 
   .notice-strip,
+  .urgency-section,
   .program-grid,
   .pricing-grid,
   .ops-layout,
@@ -957,6 +1109,11 @@ details p {
   .notice-strip div + div {
     border-top: 1px solid var(--line);
     border-left: 0;
+  }
+
+  .urgency-section,
+  .loss-grid {
+    grid-template-columns: 1fr;
   }
 
   .live-board {
@@ -998,6 +1155,7 @@ details p {
   .hero-inner,
   .section,
   .notice-strip,
+  .urgency-section,
   .contact-section,
   .site-footer {
     width: min(calc(100% - 28px), var(--max));
@@ -1029,6 +1187,11 @@ details p {
     grid-template-columns: 1fr;
   }
 
+  .urgency-panel-top,
+  .urgency-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
   .program-card,
   .price-card {
     min-height: auto;
@@ -1041,14 +1204,23 @@ details p {
   .site-footer {
     flex-direction: column;
     align-items: flex-start;
-    padding-bottom: 88px;
+    padding-bottom: 170px;
   }
 
-  .floating-kakao {
-    right: 14px;
-    bottom: 14px;
-    min-height: 50px;
-    padding: 12px 15px;
-    font-size: 13px;
+  .conversion-bar {
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+    min-height: 132px;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
   }
+
+  .compact-conversion {
+    width: 100%;
+    min-width: 0;
+  }
+
 }

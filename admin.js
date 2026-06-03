@@ -45,8 +45,12 @@ function setByPath(source, path, value) {
   const lastKey = keys.pop();
   let target = source;
 
-  keys.forEach((key) => {
-    if (!adminIsPlainObject(target[key])) target[key] = {};
+  keys.forEach((key, index) => {
+    const nextKey = keys[index + 1] || lastKey;
+    const shouldBeArray = /^\d+$/.test(nextKey);
+    if (!target[key] || typeof target[key] !== "object") {
+      target[key] = shouldBeArray ? [] : {};
+    }
     target = target[key];
   });
 
