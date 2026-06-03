@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>관리자 - 리니지 클래식 대학교</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body class="admin-body">
+    <header class="admin-topbar">
+      <a class="brand" href="index.html" aria-label="리니지 클래식 대학교 사이트 보기">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img">
+            <path d="M4 18.2V6.6L12 3l8 3.6v11.6l-8 2.8-8-2.8Z" />
+            <path d="M8 16.1V8.9l4-1.8 4 1.8v7.2l-4 1.4-4-1.4Z" />
+          </svg>
+        </span>
+        <span>
+          <strong>리니지 클래식 대학교</strong>
+          <small>Admin Console</small>
+        </span>
+      </a>
+      <nav class="admin-nav" aria-label="관리자 메뉴">
+        <a href="index.html">사이트 보기</a>
+        <button class="button secondary compact" type="button" data-action="reset">초기화</button>
+      </nav>
+    </header>
+
+    <main class="admin-shell">
+      <section class="admin-intro">
+        <p class="eyebrow">Admin</p>
+        <h1>사이트 내용 관리</h1>
+        <p>
+          가격과 상담 링크를 바꾼 뒤 저장하면 이 브라우저에서 바로 미리보기됩니다. 실제 배포에는
+          배포용 `site-data.js` 파일을 내려받아 기존 파일과 교체하세요.
+        </p>
+      </section>
+
+      <form class="admin-layout" data-admin-form>
+        <section class="admin-section">
+          <div class="admin-section-head">
+            <p class="eyebrow">Contact</p>
+            <h2>상담 연결</h2>
+          </div>
+          <div class="field-grid">
+            <label>
+              카카오톡 상담 링크
+              <input data-field="contact.kakaoUrl" type="url" placeholder="https://open.kakao.com/o/..." />
+            </label>
+            <label>
+              이메일
+              <input data-field="contact.email" type="email" placeholder="contact@example.com" />
+            </label>
+          </div>
+        </section>
+
+        <section class="admin-section">
+          <div class="admin-section-head">
+            <p class="eyebrow">Hero</p>
+            <h2>첫 화면 문구</h2>
+          </div>
+          <div class="field-grid">
+            <label>
+              사이트명
+              <input data-field="brand.name" type="text" />
+            </label>
+            <label>
+              보조 영문명
+              <input data-field="brand.subtitle" type="text" />
+            </label>
+            <label>
+              상단 라벨
+              <input data-field="hero.eyebrow" type="text" />
+            </label>
+            <label>
+              큰 제목
+              <input data-field="hero.title" type="text" />
+            </label>
+            <label class="wide-field">
+              소개 문구
+              <textarea data-field="hero.lede" rows="3"></textarea>
+            </label>
+          </div>
+        </section>
+
+        <section class="admin-section">
+          <div class="admin-section-head">
+            <p class="eyebrow">Status</p>
+            <h2>운영 현황</h2>
+          </div>
+          <div class="field-grid">
+            <label>
+              상담 가능 라벨
+              <input data-field="status.label" type="text" />
+            </label>
+            <label>
+              상담 가능 수치
+              <input data-field="status.value" type="text" />
+            </label>
+            <label>
+              실시간 바 라벨
+              <input data-field="status.lineLabel" type="text" />
+            </label>
+          </div>
+        </section>
+
+        <section class="admin-section">
+          <div class="admin-section-head">
+            <p class="eyebrow">Tuition</p>
+            <h2>수강료 카드</h2>
+          </div>
+          <div class="field-grid">
+            <label>
+              섹션 제목
+              <input data-field="pricing.title" type="text" />
+            </label>
+            <label class="wide-field">
+              섹션 설명
+              <textarea data-field="pricing.text" rows="2"></textarea>
+            </label>
+          </div>
+          <div class="pricing-editor" data-pricing-editor></div>
+        </section>
+
+        <section class="admin-section">
+          <div class="admin-section-head">
+            <p class="eyebrow">Advanced</p>
+            <h2>전체 데이터 편집</h2>
+          </div>
+          <textarea class="json-editor" data-json-editor spellcheck="false"></textarea>
+          <div class="inline-actions">
+            <button class="button secondary compact" type="button" data-action="apply-json">JSON 적용</button>
+            <button class="button primary compact" type="button" data-action="download">배포용 site-data.js 다운로드</button>
+          </div>
+        </section>
+
+        <div class="admin-savebar">
+          <p data-admin-status>수정 후 저장하세요.</p>
+          <div class="save-actions">
+            <button class="button secondary compact" type="button" data-action="preview">사이트 미리보기</button>
+            <button class="button kakao compact" type="submit">저장</button>
+          </div>
+        </div>
+      </form>
+    </main>
+
+    <script src="site-data.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>

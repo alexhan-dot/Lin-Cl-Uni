@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "Lineage Auto Fetcher Pro",
+    "version": "2.1",
+    "description": "현재 열려있는 플레이엔씨 창고 화면에서 소모품 및 장비 데이터를 직접 추출하여 시세와 연동합니다.",
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://script.google.com/macros/s/*",
+        "https://lineageclassic.plaync.com/*"
+    ],
+    "action": {
+        "default_title": "현재 화면의 창고 데이터 시트로 전송"
+    },
+    "background": {
+        "service_worker": "background.js"
+    }
+}

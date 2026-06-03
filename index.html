@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="리니지 클래식 대학교 - 클래식 서버 성장 루트, 장비 정리, 운영 리포트를 한 번에 관리하는 프리미엄 상담형 서비스."
+    />
+    <title>리니지 클래식 대학교</title>
+    <link rel="preload" as="image" href="assets/hero-campus.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="리니지 클래식 대학교 홈">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img">
+            <path d="M4 18.2V6.6L12 3l8 3.6v11.6l-8 2.8-8-2.8Z" />
+            <path d="M8 16.1V8.9l4-1.8 4 1.8v7.2l-4 1.4-4-1.4Z" />
+          </svg>
+        </span>
+        <span>
+          <strong>리니지 클래식 대학교</strong>
+          <small>Classic Growth Academy</small>
+        </span>
+      </a>
+
+      <button class="icon-button menu-button" type="button" data-menu-button aria-label="메뉴 열기" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </button>
+
+      <nav class="site-nav" data-nav aria-label="주요 메뉴">
+        <a href="#programs">전공 과정</a>
+        <a href="#operations">운영 방식</a>
+        <a href="#pricing">수강료</a>
+        <a href="#contact">입학 상담</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-bg" role="img" aria-label="달빛 아래 클래식 판타지 캠퍼스와 고급 운영실"></div>
+        <div class="hero-shade"></div>
+
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">클래식 서버 성장 컨설팅</p>
+            <h1 id="hero-title">리니지 클래식 대학교</h1>
+            <p class="hero-lede">
+              막막한 성장 구간, 장비 정리, 사냥터 루트를 전담 매니저가 설계합니다. 상담부터 운영 리포트까지
+              한 곳에서 확인하는 프리미엄 캠퍼스입니다.
+            </p>
+            <div class="hero-actions" aria-label="주요 행동">
+              <a class="button kakao" href="#contact" data-kakao-chat>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 5C6.9 5 3 8.1 3 12c0 2.5 1.6 4.7 4 5.9L6.4 21l3.3-1.8c.7.1 1.5.2 2.3.2 5.1 0 9-3.1 9-7s-3.9-7.4-9-7.4Z" />
+                </svg>
+                카카오톡으로 대화하기
+              </a>
+              <a class="button primary" href="#contact">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z" />
+                </svg>
+                입학 상담 신청
+              </a>
+              <a class="button secondary" href="#programs">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5Z" />
+                  <path d="M8 7h7M8 11h7M8 15h5" />
+                </svg>
+                커리큘럼 보기
+              </a>
+            </div>
+          </div>
+
+          <aside class="hero-status" aria-label="오늘의 운영 현황">
+            <div class="status-top">
+              <span>오늘 상담 가능</span>
+              <strong>9석</strong>
+            </div>
+            <dl class="status-grid">
+              <div>
+                <dt>평균 배정</dt>
+                <dd>12분</dd>
+              </div>
+              <div>
+                <dt>리포트 주기</dt>
+                <dd>30분</dd>
+              </div>
+              <div>
+                <dt>운영 체크</dt>
+                <dd>4단계</dd>
+              </div>
+            </dl>
+            <div class="status-line">
+              <span>실시간 접수</span>
+              <div class="pulse-track" aria-hidden="true"><span></span></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="notice-strip" aria-label="핵심 안내">
+        <div>
+          <strong>1:1 입학 상담</strong>
+          <span>서버, 클래스, 목표 구간에 맞춰 필요한 과정만 안내합니다.</span>
+        </div>
+        <div>
+          <strong>정책 준수 운영</strong>
+          <span>게임사 정책과 계정 보안 기준을 먼저 확인합니다.</span>
+        </div>
+        <div>
+          <strong>진행 리포트</strong>
+          <span>진행률, 획득 내역, 다음 목표를 간결하게 공유합니다.</span>
+        </div>
+      </section>
+
+      <section class="section" id="programs">
+        <div class="section-head">
+          <p class="eyebrow">Curriculum</p>
+          <h2>목표별 전공 과정</h2>
+          <p>단순 레벨업이 아니라 캐릭터 상태, 장비, 서버 상황을 함께 보고 성장 루트를 짭니다.</p>
+        </div>
+
+        <div class="program-grid">
+          <article class="program-card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 3 4 7l8 4 8-4-8-4Z" />
+                <path d="M4 12l8 4 8-4M4 17l8 4 8-4" />
+              </svg>
+            </div>
+            <h3>성장 설계학부</h3>
+            <p>레벨, 스탯, 사냥터, 물약 효율을 기준으로 당일 가능한 성장 경로를 설계합니다.</p>
+            <ul>
+              <li>구간별 사냥터 추천</li>
+              <li>소모품 예산 체크</li>
+              <li>목표 레벨 일정표</li>
+            </ul>
+          </article>
+
+          <article class="program-card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 7h14l-1 13H6L5 7Z" />
+                <path d="M8 7a4 4 0 0 1 8 0M9 12h6M9 16h4" />
+              </svg>
+            </div>
+            <h3>장비 정리학부</h3>
+            <p>창고와 인벤토리를 확인해 지금 팔 것, 남길 것, 강화 후보를 분류합니다.</p>
+            <ul>
+              <li>장비 우선순위 정리</li>
+              <li>시세 기준 분류표</li>
+              <li>강화 리스크 상담</li>
+            </ul>
+          </article>
+
+          <article class="program-card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 3v18M5 8h14M7 8l-3 7h6L7 8ZM17 8l-3 7h6l-3-7Z" />
+              </svg>
+            </div>
+            <h3>운영 전략학부</h3>
+            <p>접속 시간, 혈맹 일정, 보스 타임을 기준으로 무리 없는 운영 플랜을 만듭니다.</p>
+            <ul>
+              <li>주간 운영 캘린더</li>
+              <li>보스/파티 일정 점검</li>
+              <li>완료 후 인수인계</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section operations" id="operations">
+        <div class="section-head align-left">
+          <p class="eyebrow">Operations</p>
+          <h2>상담부터 완료까지 한 화면으로</h2>
+          <p>작업 범위를 먼저 확정하고, 진행 중에는 필요한 정보만 빠르게 공유합니다.</p>
+        </div>
+
+        <div class="ops-layout">
+          <div class="timeline" aria-label="진행 절차">
+            <div class="timeline-step">
+              <span>01</span>
+              <div>
+                <h3>입학 상담</h3>
+                <p>서버, 클래스, 목표, 예산, 접속 가능 시간을 확인합니다.</p>
+              </div>
+            </div>
+            <div class="timeline-step">
+              <span>02</span>
+              <div>
+                <h3>진단 리포트</h3>
+                <p>현재 장비와 창고 상태를 바탕으로 필요한 과정만 추립니다.</p>
+              </div>
+            </div>
+            <div class="timeline-step">
+              <span>03</span>
+              <div>
+                <h3>운영 진행</h3>
+                <p>확정된 범위 안에서 진행률과 주요 변동 사항을 공유합니다.</p>
+              </div>
+            </div>
+            <div class="timeline-step">
+              <span>04</span>
+              <div>
+                <h3>졸업 정리</h3>
+                <p>결과표, 남은 과제, 다음 성장 방향을 정리해 전달합니다.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="live-board">
+            <div class="board-head">
+              <div>
+                <p class="eyebrow">Live Desk</p>
+                <h3>현재 접수 현황</h3>
+              </div>
+              <span class="live-badge">운영중</span>
+            </div>
+            <div class="queue-list" data-queue-list aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section dark-band" id="pricing">
+        <div class="section-head">
+          <p class="eyebrow">Tuition</p>
+          <h2>수강료 안내</h2>
+          <p>캐릭터 상태와 목표 구간에 따라 비용 차이가 크기 때문에 상담 후 확정 견적을 안내합니다.</p>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="price-card">
+            <h3>신입생반</h3>
+            <p class="price">상담 후 안내</p>
+            <p>초반 성장 방향과 장비 정리가 필요한 유저에게 맞춘 기본 과정입니다.</p>
+            <a class="text-link" href="#contact">상담하기</a>
+          </article>
+          <article class="price-card featured">
+            <span class="tag">추천</span>
+            <h3>전공반</h3>
+            <p class="price">맞춤 견적</p>
+            <p>레벨 목표, 장비 세팅, 사냥터 운영을 함께 관리하는 표준 과정입니다.</p>
+            <a class="text-link" href="#contact">상담하기</a>
+          </article>
+          <article class="price-card">
+            <h3>졸업반</h3>
+            <p class="price">별도 협의</p>
+            <p>고레벨 구간, 일정 운영, 장기 관리가 필요한 경우 별도 플랜으로 진행합니다.</p>
+            <a class="text-link" href="#contact">상담하기</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section faq-section">
+        <div class="section-head align-left">
+          <p class="eyebrow">FAQ</p>
+          <h2>자주 묻는 질문</h2>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>
+              계정 정보는 어떻게 관리하나요?
+              <span aria-hidden="true"></span>
+            </summary>
+            <p>상담 단계에서 필요한 범위와 보안 기준을 먼저 정하고, 불필요한 개인정보는 요청하지 않습니다.</p>
+          </details>
+          <details>
+            <summary>
+              바로 시작할 수 있나요?
+              <span aria-hidden="true"></span>
+            </summary>
+            <p>운영 좌석과 서버 상황에 따라 달라집니다. 상담 후 가능한 시작 시간을 먼저 안내합니다.</p>
+          </details>
+          <details>
+            <summary>
+              진행 상황은 어떻게 확인하나요?
+              <span aria-hidden="true"></span>
+            </summary>
+            <p>정해진 주기로 진행률, 주요 획득 내역, 다음 목표를 간단한 리포트로 공유합니다.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact">
+        <div class="contact-copy">
+          <p class="eyebrow">Admissions</p>
+          <h2>입학 상담실</h2>
+          <p>
+            카카오톡 상담 링크를 연결하면 방문자가 바로 대화창으로 이동합니다. 서버, 클래스, 목표 구간을
+            보내주시면 가능한 좌석과 시작 시간을 안내합니다.
+          </p>
+        </div>
+        <div class="contact-actions">
+          <a class="button kakao" href="#contact" data-kakao-chat>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5C6.9 5 3 8.1 3 12c0 2.5 1.6 4.7 4 5.9L6.4 21l3.3-1.8c.7.1 1.5.2 2.3.2 5.1 0 9-3.1 9-7s-3.9-7.4-9-7.4Z" />
+            </svg>
+            카카오톡 상담 시작
+          </a>
+          <a class="button primary" href="mailto:contact@example.com">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 4h16v16H4V4Z" />
+              <path d="m4 7 8 6 8-6" />
+            </svg>
+            이메일 상담
+          </a>
+          <a class="button secondary" href="#top">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m12 19-7-7 7-7M19 12H5" />
+            </svg>
+            처음으로
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <a class="floating-kakao" href="#contact" data-kakao-chat aria-label="카카오톡으로 대화하기">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 5C6.9 5 3 8.1 3 12c0 2.5 1.6 4.7 4 5.9L6.4 21l3.3-1.8c.7.1 1.5.2 2.3.2 5.1 0 9-3.1 9-7s-3.9-7.4-9-7.4Z" />
+      </svg>
+      <span>톡 상담</span>
+    </a>
+
+    <footer class="site-footer">
+      <p>© 2026 리니지 클래식 대학교. All rights reserved.</p>
+      <p>본 사이트는 팬/상담형 랜딩 페이지이며, 공식 게임사와 무관합니다.</p>
+      <a class="admin-link" href="admin.html">관리자</a>
+    </footer>
+
+    <script src="site-data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
