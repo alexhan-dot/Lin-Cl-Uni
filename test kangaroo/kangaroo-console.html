@@ -1,0 +1,556 @@
+<title>Kangaroo Bot Console</title>
+<meta name="description" content="Control-panel mockup for a learning-only computer-vision game bot">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  /* ---------- tokens: light (bare :root) ---------- */
+  :root{
+    --ground:#eef2f1; --panel:#ffffff; --panel-2:#f6f9f8; --line:#dbe4e2;
+    --ink:#0f1e1c; --muted:#5c6f6c; --faint:#8497944d;
+    --accent:#0fae98; --accent-ink:#053b34; --accent-soft:#0fae9819;
+    --run:#0f9d63; --scan:#c98214; --stop:#d6465a;
+    --run-soft:#0f9d6318; --scan-soft:#c9821418; --stop-soft:#d6465a18;
+    --grid:#00000010; --shadow:0 1px 2px #0e231f14,0 8px 30px #0e231f0f;
+    --view-bg:#0c1417; --view-ink:#cfe9e3; /* viewport stays dark in both themes (it's a screen) */
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0b1215; --panel:#111c20; --panel-2:#0d171a; --line:#213136;
+      --ink:#e2edec; --muted:#8ba1a2; --faint:#8ba1a233;
+      --accent:#33e2c4; --accent-ink:#062e28; --accent-soft:#33e2c414;
+      --run:#34d38b; --scan:#f2b24a; --stop:#f26073;
+      --run-soft:#34d38b16; --scan-soft:#f2b24a16; --stop-soft:#f2607316;
+      --grid:#ffffff0c; --shadow:0 1px 2px #0004,0 10px 34px #0006;
+      --view-bg:#080f12; --view-ink:#cfe9e3;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0b1215; --panel:#111c20; --panel-2:#0d171a; --line:#213136;
+    --ink:#e2edec; --muted:#8ba1a2; --faint:#8ba1a233;
+    --accent:#33e2c4; --accent-ink:#062e28; --accent-soft:#33e2c414;
+    --run:#34d38b; --scan:#f2b24a; --stop:#f26073;
+    --run-soft:#34d38b16; --scan-soft:#f2b24a16; --stop-soft:#f2607316;
+    --grid:#ffffff0c; --shadow:0 1px 2px #0004,0 10px 34px #0006;
+    --view-bg:#080f12; --view-ink:#cfe9e3;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{margin:0}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+  .eyebrow{font-family:"Chakra Petch",sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:11px;font-weight:600;color:var(--muted)}
+  .tnum{font-variant-numeric:tabular-nums}
+
+  .app{max-width:1180px;margin:0 auto;padding:18px clamp(12px,3vw,26px) 40px}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    padding:12px 16px;border:1px solid var(--line);border-radius:14px;
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));box-shadow:var(--shadow);
+  }
+  .brand{display:flex;align-items:center;gap:11px;min-width:0}
+  .glyph{
+    width:34px;height:34px;border-radius:9px;flex:none;display:grid;place-items:center;
+    background:var(--accent-soft);border:1px solid var(--accent);color:var(--accent);
+  }
+  .glyph svg{width:20px;height:20px}
+  .brand h1{font-family:"Chakra Petch",sans-serif;font-size:16px;font-weight:700;letter-spacing:.02em;line-height:1.1}
+  .brand .sub{font-size:11px;color:var(--muted)}
+  .spacer{flex:1 1 40px}
+
+  .state-pill{
+    display:inline-flex;align-items:center;gap:9px;padding:7px 13px;border-radius:999px;
+    font-family:"Chakra Petch",sans-serif;font-weight:600;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;
+    border:1px solid var(--scan);color:var(--scan);background:var(--scan-soft);
+  }
+  .state-pill .dot{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 0 0 currentColor;animation:pulse 1.6s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,currentColor 60%,transparent)}70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
+
+  .btn{
+    font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:13.5px;cursor:pointer;
+    border:1px solid var(--line);background:var(--panel);color:var(--ink);
+    padding:9px 15px;border-radius:10px;display:inline-flex;align-items:center;gap:8px;transition:.15s;
+  }
+  .btn:hover{border-color:var(--accent)}
+  .btn svg{width:15px;height:15px}
+  .btn.run{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .btn.run:hover{filter:brightness(1.05)}
+  .btn.ghost{background:transparent}
+  .btn:focus-visible,.iconbtn:focus-visible,.tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .iconbtn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;display:grid;place-items:center}
+  .iconbtn:hover{color:var(--accent);border-color:var(--accent)}
+  .iconbtn svg{width:17px;height:17px}
+
+  /* ---------- shell ---------- */
+  .shell{display:grid;grid-template-columns:172px 1fr;gap:16px;margin-top:16px}
+  @media (max-width:820px){.shell{grid-template-columns:1fr}}
+
+  .rail{display:flex;flex-direction:column;gap:4px;align-content:start}
+  @media (max-width:820px){.rail{flex-direction:row;overflow-x:auto;gap:6px}}
+  .tab{
+    display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;
+    border:1px solid transparent;color:var(--muted);font-weight:500;font-size:13.5px;white-space:nowrap;background:none;text-align:left;width:100%;
+  }
+  .tab svg{width:16px;height:16px;flex:none}
+  .tab:hover{background:var(--panel)}
+  .tab[aria-current="true"]{background:var(--panel);border-color:var(--line);color:var(--ink);box-shadow:var(--shadow)}
+  .tab[aria-current="true"] svg{color:var(--accent)}
+  .rail .note{margin-top:10px;padding:11px;border:1px dashed var(--line);border-radius:10px;font-size:11.5px;color:var(--muted);line-height:1.45}
+  @media (max-width:820px){.rail .note{display:none}}
+
+  .main{display:grid;grid-template-columns:1.55fr 1fr;gap:16px;align-items:start}
+  @media (max-width:960px){.main{grid-template-columns:1fr}}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+  .card-h{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--line)}
+  .card-h h3{font-size:13px;font-family:"Chakra Petch",sans-serif;letter-spacing:.04em;font-weight:600}
+  .card-h .eyebrow{margin-left:auto}
+
+  /* ---------- viewport ---------- */
+  .view-wrap{grid-column:1/-1}
+  .viewport{position:relative;background:var(--view-bg);border-radius:0 0 14px 14px;overflow:hidden}
+  #scene{display:block;width:100%;height:auto;color:var(--view-ink)}
+  .hud{position:absolute;inset:0;pointer-events:none;font-family:"IBM Plex Mono",monospace;color:var(--view-ink)}
+  .hud .tl{position:absolute;top:12px;left:14px;font-size:11px;letter-spacing:.05em;opacity:.85}
+  .hud .tr{position:absolute;top:12px;right:14px;text-align:right;font-size:11px;opacity:.85}
+  .hud .bl{position:absolute;bottom:12px;left:14px;display:flex;gap:8px;align-items:center}
+  .hud .fsm{
+    display:inline-flex;align-items:center;gap:8px;padding:6px 11px;border-radius:8px;
+    background:#0009;border:1px solid #ffffff2a;font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  }
+  .hud .fsm b{color:var(--accent)}
+  .conf-wrap{position:absolute;bottom:14px;right:14px;width:150px}
+  .conf-lab{display:flex;justify-content:space-between;font-size:10.5px;opacity:.8;margin-bottom:4px}
+  .conf-bar{height:5px;border-radius:3px;background:#ffffff20;overflow:hidden}
+  .conf-fill{height:100%;width:60%;background:var(--accent);border-radius:3px;transition:width .2s}
+
+  /* ---------- kpis ---------- */
+  .kpis{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media (max-width:620px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;box-shadow:var(--shadow)}
+  .kpi .k{font-size:11px;color:var(--muted);letter-spacing:.04em}
+  .kpi .v{font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:26px;line-height:1.1;margin-top:5px}
+  .kpi .u{font-size:12px;color:var(--muted);font-weight:500}
+  .spark{margin-top:8px;width:100%;height:26px;display:block}
+
+  /* ---------- pipeline ---------- */
+  .pipe{display:flex;gap:8px;padding:15px 16px;flex-wrap:wrap}
+  .stage{
+    flex:1 1 120px;min-width:110px;border:1px solid var(--line);border-radius:11px;padding:11px 12px;position:relative;
+    background:var(--panel-2);transition:.2s;
+  }
+  .stage .n{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--muted)}
+  .stage .t{font-family:"Chakra Petch",sans-serif;font-weight:600;font-size:13.5px;margin-top:3px}
+  .stage .d{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.4}
+  .stage.active{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 1px var(--accent) inset}
+  .stage.active .t{color:var(--accent)}
+
+  /* ---------- config ---------- */
+  .cfg{padding:6px 16px 16px}
+  .field{padding:12px 0;border-bottom:1px solid var(--line)}
+  .field:last-child{border-bottom:0}
+  .field .row{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .field label{font-weight:600;font-size:13px}
+  .field .val{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--accent);font-weight:600}
+  .field .hint{font-size:11.5px;color:var(--muted);margin-top:2px}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:3px;background:var(--line);margin-top:11px;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);border:2px solid var(--panel);box-shadow:var(--shadow)}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--accent);border:2px solid var(--panel)}
+  .toggle{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:13px;font-weight:600}
+  .switch{width:38px;height:22px;border-radius:999px;background:var(--line);position:relative;transition:.18s;flex:none}
+  .switch::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--panel);transition:.18s;box-shadow:0 1px 2px #0003}
+  .toggle[aria-pressed="true"] .switch{background:var(--accent)}
+  .toggle[aria-pressed="true"] .switch::after{left:18px}
+
+  /* ---------- log ---------- */
+  .log{grid-column:1/-1}
+  .log-body{font-family:"IBM Plex Mono",monospace;font-size:12px;line-height:1.65;padding:12px 16px;max-height:190px;overflow:auto;background:var(--panel-2);border-radius:0 0 14px 14px}
+  .log-body .ln{display:flex;gap:10px;white-space:nowrap}
+  .log-body .ts{color:var(--muted);flex:none}
+  .log-body .lv{flex:none;width:52px;font-weight:600}
+  .lv.ok{color:var(--run)} .lv.scan{color:var(--scan)} .lv.act{color:var(--accent)} .lv.sys{color:var(--muted)}
+  .log-body .msg{color:var(--ink);overflow:hidden;text-overflow:ellipsis}
+
+  .foot{grid-column:1/-1;margin-top:6px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.5}
+  .tag{display:inline-block;padding:2px 8px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--muted);font-family:"IBM Plex Mono",monospace}
+</style>
+
+<div class="app">
+
+  <!-- top bar -->
+  <div class="topbar">
+    <div class="brand">
+      <span class="glyph" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h4M17 3h4M3 21h4M17 21h4M3 3v4M21 3v4M3 21v-4M21 21v-4"/><circle cx="12" cy="12" r="3.2"/></svg>
+      </span>
+      <div>
+        <h1>Kangaroo&nbsp;Console</h1>
+        <div class="sub">Vision-bot control panel · <span class="mono">practice build</span></div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="state-pill" id="statePill" style="border-color:var(--scan);color:var(--scan);background:var(--scan-soft)">
+      <span class="dot"></span><span id="stateText">Idle</span>
+    </div>
+    <button class="btn run" id="runBtn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span id="runLabel">Start</span>
+    </button>
+    <button class="iconbtn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+
+  <div class="shell">
+    <!-- rail -->
+    <nav class="rail" aria-label="Modules">
+      <button class="tab" aria-current="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Overview</button>
+      <button class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/></svg>Vision</button>
+      <button class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Automation</button>
+      <button class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.3 1a7 7 0 0 0-1.7-1l-.4-2.5H9.5L9 6.6a7 7 0 0 0-1.7 1l-2.3-1-2 3.4L5 11a7 7 0 0 0 0 2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 1.7 1l.5 2.5h4l.4-2.5a7 7 0 0 0 1.7-1l2.3 1 2-3.4-2-1.5a7 7 0 0 0 .1-1z"/></svg>Config</button>
+      <button class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h16"/></svg>Logs</button>
+      <div class="note"><b>Learning build.</b> The target is a practice mini-game you run yourself — no third-party servers, no ToS to break. Swap the capture region for your own app to experiment safely.</div>
+    </nav>
+
+    <!-- main -->
+    <div class="main">
+
+      <!-- viewport -->
+      <section class="card view-wrap">
+        <div class="card-h">
+          <h3>Detection Viewport</h3>
+          <span class="tag">region 640×360</span>
+          <span class="eyebrow" id="fpsLabel">— fps</span>
+        </div>
+        <div class="viewport">
+          <canvas id="scene" width="640" height="360"></canvas>
+          <div class="hud" aria-hidden="true">
+            <div class="tl">CAPTURE · mss<br>Δ <span id="frameMs">16</span> ms/frame</div>
+            <div class="tr">TEMPLATE<br>kangaroo_32.png</div>
+            <div class="bl"><span class="fsm">state · <b id="fsmName">SCAN</b></span></div>
+            <div class="conf-wrap">
+              <div class="conf-lab"><span>match confidence</span><span id="confPct">0.00</span></div>
+              <div class="conf-bar"><div class="conf-fill" id="confFill"></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- kpis -->
+      <div class="kpis">
+        <div class="kpi"><div class="k">Uptime</div><div class="v tnum" id="kUptime">00:00</div><div class="u">session</div></div>
+        <div class="kpi"><div class="k">Actions / min</div><div class="v tnum" id="kApm">0</div><canvas class="spark" id="sparkApm" width="200" height="52"></canvas></div>
+        <div class="kpi"><div class="k">Hit rate</div><div class="v tnum" id="kHit">—</div><div class="u"><span id="kHits">0</span> hits / <span id="kAtt">0</span> tries</div></div>
+        <div class="kpi"><div class="k">Avg confidence</div><div class="v tnum" id="kConf">0.00</div><canvas class="spark" id="sparkConf" width="200" height="52"></canvas></div>
+      </div>
+
+      <!-- pipeline -->
+      <section class="card view-wrap">
+        <div class="card-h"><h3>Loop Pipeline</h3><span class="eyebrow">capture → act</span></div>
+        <div class="pipe" id="pipe">
+          <div class="stage" data-stage="capture"><div class="n">01 · perception</div><div class="t">Capture</div><div class="d">Grab the region as pixels (<span class="mono">mss</span>).</div></div>
+          <div class="stage" data-stage="detect"><div class="n">02 · perception</div><div class="t">Detect</div><div class="d">Template match with <span class="mono">OpenCV</span>.</div></div>
+          <div class="stage" data-stage="decide"><div class="n">03 · decision</div><div class="t">Decide</div><div class="d">State machine picks the next move.</div></div>
+          <div class="stage" data-stage="act"><div class="n">04 · action</div><div class="t">Act</div><div class="d">Move + click via <span class="mono">pyautogui</span>.</div></div>
+          <div class="stage" data-stage="wait"><div class="n">05 · loop</div><div class="t">Wait</div><div class="d">Humanized delay, then repeat.</div></div>
+        </div>
+      </section>
+
+      <!-- config -->
+      <section class="card">
+        <div class="card-h"><h3>Config</h3><span class="eyebrow">live</span></div>
+        <div class="cfg">
+          <div class="field">
+            <div class="row"><label for="thr">Match threshold</label><span class="val" id="thrV">0.80</span></div>
+            <div class="hint">Minimum correlation to accept a detection.</div>
+            <input type="range" id="thr" min="50" max="98" value="80">
+          </div>
+          <div class="field">
+            <div class="row"><label for="dly">Click delay</label><span class="val" id="dlyV">120 ms</span></div>
+            <div class="hint">Pause between lock and click.</div>
+            <input type="range" id="dly" min="40" max="400" value="120">
+          </div>
+          <div class="field">
+            <div class="row"><label for="jit">Humanize jitter</label><span class="val" id="jitV">6 px</span></div>
+            <div class="hint">Random offset so motion isn't robotic.</div>
+            <input type="range" id="jit" min="0" max="24" value="6">
+          </div>
+          <div class="field">
+            <button class="toggle" id="failsafe" aria-pressed="true">
+              <span class="switch"></span><span>Corner fail-safe (kill on mouse&nbsp;→&nbsp;corner)</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- log -->
+      <section class="card log">
+        <div class="card-h"><h3>Event Log</h3><span class="eyebrow" id="logCount">0 events</span></div>
+        <div class="log-body" id="log"></div>
+      </section>
+
+      <p class="foot">
+        Mockup for a computer-vision automation study project · pipeline pattern after LearnCodeByGaming's OpenCV-in-games series ·
+        dashboard layout after the BOT-MMORPG-AI launcher.<br>Detection feed is a self-contained simulation — no game is attached.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+  var reduce=window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+  /* ---------- theme ---------- */
+  $("#themeBtn").addEventListener("click",function(){
+    var r=document.documentElement;
+    var cur=r.getAttribute("data-theme");
+    if(!cur){cur=window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";}
+    r.setAttribute("data-theme",cur==="dark"?"light":"dark");
+  });
+
+  /* ---------- config wiring ---------- */
+  var cfg={thr:0.80,dly:120,jit:6};
+  function bind(id,vid,fmt,key,scale){
+    var el=$(id);el.addEventListener("input",function(){
+      var v=+el.value*scale; cfg[key]=v; $(vid).textContent=fmt(v);
+    });
+  }
+  bind("#thr","#thrV",function(v){return v.toFixed(2)},"thr",0.01);
+  bind("#dly","#dlyV",function(v){return Math.round(v)+" ms"},"dly",1);
+  bind("#jit","#jitV",function(v){return Math.round(v)+" px"},"jit",1);
+  $("#failsafe").addEventListener("click",function(){
+    var p=this.getAttribute("aria-pressed")==="true"; this.setAttribute("aria-pressed",String(!p));
+    log(p?"scan":"sys",p?"SAFE":"SYS",p?"fail-safe disabled":"fail-safe armed");
+  });
+
+  /* ---------- log ---------- */
+  var logEl=$("#log"),logN=0;
+  function pad(n){return n<10?"0"+n:""+n}
+  function log(cls,lv,msg){
+    logN++;
+    var t=new Date(),ts=pad(t.getHours())+":"+pad(t.getMinutes())+":"+pad(t.getSeconds());
+    var row=document.createElement("div");row.className="ln";
+    row.innerHTML='<span class="ts">'+ts+'</span><span class="lv '+cls+'">'+lv+'</span><span class="msg"></span>';
+    row.querySelector(".msg").textContent=msg;
+    logEl.appendChild(row);
+    while(logEl.children.length>60)logEl.removeChild(logEl.firstChild);
+    logEl.scrollTop=logEl.scrollHeight;
+    $("#logCount").textContent=logN+" event"+(logN===1?"":"s");
+  }
+
+  /* ---------- state ---------- */
+  var running=false,t0=0,frames=0,lastFpsT=0;
+  var apm=[],confHist=[],attempts=0,hits=0,apmMinute=[];
+  var STATES={IDLE:"Idle",SCAN:"Scanning",LOCK:"Target locked",CLICK:"Clicking",COOL:"Cooldown"};
+  var fsm="IDLE",fsmT=0,stateColor={IDLE:"scan",SCAN:"scan",LOCK:"accent",CLICK:"run",COOL:"scan"};
+
+  function setPill(){
+    var p=$("#statePill"),c=fsm==="IDLE"?"scan":(fsm==="CLICK"||fsm==="LOCK"?"run":"scan");
+    var col=fsm==="LOCK"||fsm==="CLICK"?"--run":(fsm==="IDLE"?"--stop":"--scan");
+    p.style.borderColor="var("+col+")";p.style.color="var("+col+")";p.style.background="var("+col+"-soft)";
+    $("#stateText").textContent=STATES[fsm];
+    $("#fsmName").textContent=fsm;
+    var pipeMap={SCAN:["capture","detect"],LOCK:["decide"],CLICK:["act"],COOL:["wait"],IDLE:[]};
+    var on=pipeMap[fsm]||[];
+    Array.prototype.forEach.call(document.querySelectorAll(".stage"),function(s){
+      s.classList.toggle("active",on.indexOf(s.getAttribute("data-stage"))>=0);
+    });
+  }
+
+  /* ---------- scene ---------- */
+  var cv=$("#scene"),ctx=cv.getContext("2d"),W=640,H=360;
+  var tgt={x:320,y:180,vx:2.4,vy:1.7,r:15,alive:true,ttl:0};
+  var reticle={x:320,y:180},conf=0;
+  function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+  function spawn(){
+    tgt.x=60+Math.random()*(W-120);tgt.y=60+Math.random()*(H-120);
+    var a=Math.random()*6.28,sp=2+Math.random()*2.2;tgt.vx=Math.cos(a)*sp;tgt.vy=Math.sin(a)*sp;
+    tgt.alive=true;tgt.ttl=180+Math.random()*160;
+  }
+  function drawGrid(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle=css("--view-bg");ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle="rgba(120,200,190,.10)";ctx.lineWidth=1;
+    for(var x=0;x<=W;x+=32){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(var y=0;y<=H;y+=32){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  }
+  function drawTarget(){
+    if(!tgt.alive)return;
+    var g=ctx.createRadialGradient(tgt.x,tgt.y,2,tgt.x,tgt.y,tgt.r+8);
+    var a=css("--accent");
+    g.addColorStop(0,a);g.addColorStop(1,"rgba(51,226,196,0)");
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(tgt.x,tgt.y,tgt.r+8,0,6.283);ctx.fill();
+    ctx.fillStyle=a;ctx.beginPath();ctx.arc(tgt.x,tgt.y,tgt.r,0,6.283);ctx.fill();
+    ctx.fillStyle="#04211d";ctx.font="700 15px 'Chakra Petch',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.fillText("K",tgt.x,tgt.y+1);
+  }
+  function drawReticle(locked){
+    var col=locked?css("--run"):css("--scan");
+    ctx.strokeStyle=col;ctx.lineWidth=2;
+    var s=locked?18:26;
+    ctx.beginPath();
+    ctx.moveTo(reticle.x-s,reticle.y);ctx.lineTo(reticle.x-6,reticle.y);
+    ctx.moveTo(reticle.x+6,reticle.y);ctx.lineTo(reticle.x+s,reticle.y);
+    ctx.moveTo(reticle.x,reticle.y-s);ctx.lineTo(reticle.x,reticle.y-6);
+    ctx.moveTo(reticle.x,reticle.y+6);ctx.lineTo(reticle.x,reticle.y+s);
+    ctx.stroke();
+    ctx.beginPath();ctx.arc(reticle.x,reticle.y,s,0,6.283);ctx.globalAlpha=.4;ctx.stroke();ctx.globalAlpha=1;
+    if(locked){
+      var bx=tgt.x,by=tgt.y,bs=tgt.r+7;
+      ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.setLineDash([4,4]);
+      ctx.strokeRect(bx-bs,by-bs,bs*2,bs*2);ctx.setLineDash([]);
+      ctx.font="600 10px 'IBM Plex Mono',monospace";ctx.fillStyle=col;ctx.textAlign="left";
+      ctx.fillText("kangaroo "+(conf*100).toFixed(1)+"%",bx-bs,by-bs-6);
+    }
+  }
+
+  /* ---------- main loop ---------- */
+  var clickFx=0;
+  function step(ts){
+    if(!lastFpsT)lastFpsT=ts;
+    frames++;
+    if(ts-lastFpsT>=500){$("#fpsLabel").textContent=Math.round(frames*1000/(ts-lastFpsT))+" fps";frames=0;lastFpsT=ts;}
+    $("#frameMs").textContent=(14+Math.round(Math.random()*6));
+
+    drawGrid();
+
+    if(running){
+      fsmT++;
+      // move target
+      if(tgt.alive){
+        tgt.x+=tgt.vx;tgt.y+=tgt.vy;tgt.ttl--;
+        if(tgt.x<40||tgt.x>W-40)tgt.vx*=-1;
+        if(tgt.y<40||tgt.y>H-40)tgt.vy*=-1;
+        if(tgt.ttl<=0)spawn();
+      }
+      // fsm
+      if(fsm==="IDLE"){fsm="SCAN";fsmT=0;setPill();}
+      else if(fsm==="SCAN"){
+        // reticle sweeps searching
+        reticle.x+=(Math.sin(ts/300)*140+W/2-reticle.x)*0.08;
+        reticle.y+=(Math.cos(ts/240)*80+H/2-reticle.y)*0.08;
+        conf+= ( (Math.random()*0.35+0.15) - conf)*0.1;
+        if(fsmT>28+Math.random()*20){ // acquired
+          fsm="LOCK";fsmT=0;setPill();
+          log("scan","SCAN","candidate at ("+Math.round(tgt.x)+","+Math.round(tgt.y)+")");
+        }
+      }
+      else if(fsm==="LOCK"){
+        reticle.x+=(tgt.x-reticle.x)*0.28;reticle.y+=(tgt.y-reticle.y)*0.28;
+        conf+=((0.82+Math.random()*0.16)-conf)*0.2;
+        var near=Math.abs(reticle.x-tgt.x)<3&&Math.abs(reticle.y-tgt.y)<3;
+        if(near&&conf>=cfg.thr&&fsmT>Math.max(6,cfg.dly/16)){
+          fsm="CLICK";fsmT=0;clickFx=1;setPill();
+          attempts++;
+          var jx=(Math.random()-0.5)*cfg.jit*2,jy=(Math.random()-0.5)*cfg.jit*2;
+          var hit=Math.abs(jx)<tgt.r&&Math.abs(jy)<tgt.r;
+          if(hit){hits++;apmMinute.push(ts);log("act","CLICK","click ("+Math.round(tgt.x+jx)+","+Math.round(tgt.y+jy)+") · hit");spawn();}
+          else{log("scan","MISS","click off by "+Math.round(Math.hypot(jx,jy))+"px");}
+          reticle.x=tgt.x+jx;reticle.y=tgt.y+jy;
+        } else if(conf<cfg.thr&&fsmT>40){ fsm="SCAN";fsmT=0;setPill(); }
+      }
+      else if(fsm==="CLICK"){
+        if(fsmT>10){fsm="COOL";fsmT=0;setPill();}
+      }
+      else if(fsm==="COOL"){
+        conf+=(0.1-conf)*0.1;
+        if(fsmT>Math.max(8,cfg.dly/16)){fsm="SCAN";fsmT=0;setPill();}
+      }
+    } else {
+      reticle.x+=(W/2-reticle.x)*0.05;reticle.y+=(H/2-reticle.y)*0.05;
+      conf+=(0-conf)*0.08;
+    }
+
+    drawTarget();
+    drawReticle(fsm==="LOCK"||fsm==="CLICK");
+    if(clickFx>0){
+      ctx.strokeStyle=css("--run");ctx.lineWidth=2;ctx.globalAlpha=clickFx;
+      ctx.beginPath();ctx.arc(reticle.x,reticle.y,(1-clickFx)*34+6,0,6.283);ctx.stroke();ctx.globalAlpha=1;
+      clickFx-=0.06;if(clickFx<0)clickFx=0;
+    }
+
+    // hud numbers
+    conf=Math.max(0,Math.min(1,conf));
+    $("#confPct").textContent=conf.toFixed(2);
+    $("#confFill").style.width=(conf*100).toFixed(0)+"%";
+    $("#confFill").style.background=conf>=cfg.thr?css("--run"):css("--scan");
+
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+
+  /* ---------- metrics tick (1s) ---------- */
+  setInterval(function(){
+    if(!running)return;
+    // uptime
+    var s=Math.floor((performance.now()-t0)/1000);
+    $("#kUptime").textContent=pad(Math.floor(s/60))+":"+pad(s%60);
+    // apm
+    var cut=performance.now()-60000;
+    apmMinute=apmMinute.filter(function(x){return x>cut});
+    var perMin=apmMinute.length;
+    $("#kApm").textContent=perMin;
+    pushSpark(apmSpark,perMin);
+    // hit rate
+    $("#kHit").textContent=attempts?Math.round(hits/attempts*100)+"%":"—";
+    $("#kHits").textContent=hits;$("#kAtt").textContent=attempts;
+    // avg conf
+    confHist.push(conf);if(confHist.length>40)confHist.shift();
+    var avg=confHist.reduce(function(a,b){return a+b},0)/confHist.length;
+    $("#kConf").textContent=avg.toFixed(2);
+    pushSpark(confSpark,avg);
+  },1000);
+
+  /* ---------- sparklines ---------- */
+  function mkSpark(id,max){var c=$(id);return{c:c,x:c.getContext("2d"),data:[],max:max}}
+  var apmSpark=mkSpark("#sparkApm",1),confSpark=mkSpark("#sparkConf",1);
+  function pushSpark(s,v){s.data.push(v);if(s.data.length>40)s.data.shift();
+    if(s===apmSpark){s.max=Math.max(1,Math.max.apply(null,s.data));}else{s.max=1;}
+    drawSpark(s);}
+  function drawSpark(s){
+    var x=s.x,w=s.c.width,h=s.c.height;x.clearRect(0,0,w,h);
+    if(s.data.length<2)return;
+    var col=css("--accent");
+    x.beginPath();
+    s.data.forEach(function(v,i){
+      var px=i/(s.data.length-1)*w, py=h-6-(v/s.max)*(h-12);
+      i?x.lineTo(px,py):x.moveTo(px,py);
+    });
+    x.lineTo(w,h);x.lineTo(0,h);x.closePath();
+    var g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,col+"55");g.addColorStop(1,col+"00");
+    x.fillStyle=g;x.fill();
+    x.beginPath();
+    s.data.forEach(function(v,i){var px=i/(s.data.length-1)*w,py=h-6-(v/s.max)*(h-12);i?x.lineTo(px,py):x.moveTo(px,py);});
+    x.strokeStyle=col;x.lineWidth=1.6;x.stroke();
+    var last=s.data[s.data.length-1],lx=w,ly=h-6-(last/s.max)*(h-12);
+    x.fillStyle=col;x.beginPath();x.arc(lx-1.5,ly,2.2,0,6.283);x.fill();
+  }
+
+  /* ---------- run control ---------- */
+  function start(){
+    running=true;t0=performance.now();fsm="SCAN";fsmT=0;setPill();
+    $("#runLabel").textContent="Stop";
+    $("#runBtn").innerHTML='<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg><span id="runLabel">Stop</span>';
+    log("ok","BOOT","capture region attached · 640×360");
+    log("sys","SYS","template loaded · kangaroo_32.png");
+    spawn();
+  }
+  function stop(){
+    running=false;fsm="IDLE";setPill();
+    $("#runBtn").innerHTML='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span id="runLabel">Start</span>';
+    log("scan","HALT","loop stopped by operator");
+  }
+  $("#runBtn").addEventListener("click",function(){running?stop():start();});
+
+  setPill();
+  log("sys","SYS","console ready — press Start");
+})();
+</script>
