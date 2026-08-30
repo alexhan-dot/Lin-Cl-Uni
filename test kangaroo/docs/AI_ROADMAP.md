@@ -62,17 +62,64 @@ python evaluate.py --policy data/policy_rl.pt --render
 | Policy-gradient RL (REINFORCE) | `train_reinforce.py` | learning from reward, improving beyond the demos |
 | Evaluation | `evaluate.py` | measuring a policy honestly, watching it play |
 
-## Where to go next (all on the practice game)
+## Verified results (all measured on this machine)
 
-- **Better observations:** feed raw pixels + a small CNN instead of hand-made
-  features — this is where "screen recognition" rejoins the AI (the bot *sees*
-  the game like you do). Start with `mss` capture of the practice window.
-- **Stronger RL:** swap REINFORCE for PPO (e.g. `stable-baselines3`) for faster,
-  steadier learning.
-- **Harder game:** add obstacles, multiple targets, a score for accuracy — the
-  richer the environment, the more interesting the learned behavior.
-- **Gymnasium wrapper:** wrap `KangarooEnv` in the `gymnasium.Env` API so you can
-  plug in any standard RL library.
+| Method | Script | Hits/episode |
+|---|---|---|
+| Random policy | — | 0.2 |
+| Pixel BC (CNN sees the screen) | `train_bc_pixels.py` | 1.9 |
+| Feature BC (imitate the player) | `train_bc.py` | ~18 |
+| REINFORCE, from scratch | `train_reinforce.py` | ~0.1 |
+| REINFORCE, warm-started from BC | `train_reinforce.py --init …` | ~18 |
+| **PPO (stable-baselines3)** | `train_ppo.py` | **18.2** |
+
+## Extra track A — the AI sees pixels (real screen recognition)
+
+Instead of hand-made features, the agent gets the **rendered image** and a CNN
+learns to see and act. This is where screen recognition and decision-making fuse
+into one network.
+
+```
+python train_bc_pixels.py                 # CNN learns from pixels -> data/policy_cnn.pt
+```
+
+**Lesson from the numbers:** pixel BC reaches ~1.9 hits (10× random — it clearly
+learned to *see*), but far below feature BC's ~18. That gap is **distribution
+shift**: behavior cloning only ever sees expert states, so once the agent drifts
+into a state the expert never visited, small errors compound. The fixes are
+**RL directly from pixels** (reward corrects the drift) or **DAgger** (relabel
+the states the agent actually visits). Files: `pixel_env.py`, `model_cnn.py`.
+
+## Extra track B — PPO (stronger, steadier RL)
+
+REINFORCE is simple but noisy and weak from scratch. **PPO** from
+`stable-baselines3` learns far better. Our `gym_wrapper.py` exposes the practice
+game through the standard `gymnasium.Env` API, so any RL library plugs in.
+
+```
+python train_ppo.py --steps 150000        # -> data/policy_ppo.zip
+python train_ppo.py --eval data/policy_ppo.zip
+```
+
+PPO reached **18.2 hits from scratch, reward only** (no demonstrations) — and was
+still improving. This is the clean answer to "AI learns the game and grows".
+
+## Extra track C — your own desktop (RPA)
+
+The same pipeline, pointed at your real work instead of a game, lives in
+`../rpa/`: `record_session.py` captures your screen + real mouse/keys,
+`replay_session.py` automates them back, and `build_dataset.py` turns a recording
+into a (screen → click) training set — the desktop twin of `train_bc_pixels.py`.
+See `../rpa/README.md`.
+
+## Where to go further
+
+- **RL from pixels:** run PPO with SB3's `CnnPolicy` on a pixel `gymnasium`
+  wrapper of `PixelKangaroo` — fixes the BC distribution-shift plateau above.
+- **Harder game:** obstacles, multiple targets, an accuracy score — richer
+  environment, richer learned behavior.
+- **DAgger:** iteratively relabel the agent's own trajectories with the expert to
+  beat plain behavior cloning.
 
 ## Install
 

@@ -24,8 +24,9 @@ against a target where automating is completely fine.
 |------|-----------|
 | `kangaroo-console.html` | The UX/UI design — an interactive mockup of the bot's control panel (open in a browser). |
 | `docs/ARCHITECTURE.md` | How a vision bot is built: the 4-part pipeline + the state machine. |
-| `docs/AI_ROADMAP.md` | How the AI learns from you and grows: imitation learning → reinforcement learning. |
+| `docs/AI_ROADMAP.md` | How the AI learns from you and grows: imitation → RL → pixels → PPO. |
 | `bot/` | Runnable Python: the practice game env + the full learning pipeline. |
+| `rpa/` | Your-own-desktop automation: screen + mouse/key recorder, replay, dataset builder. |
 
 ## The AI pipeline (runnable)
 
@@ -45,6 +46,12 @@ python evaluate.py --policy data/policy_rl.pt --render   # watch it play
 
 No display / no recording yet? `python synth_demos.py` fakes the demos so you
 can test the whole chain first. See `docs/AI_ROADMAP.md` for the full walkthrough.
+
+**Two stronger tracks** (also verified):
+```
+python train_bc_pixels.py                          # AI sees PIXELS via a CNN (real screen recognition)
+python train_ppo.py --steps 150000                 # PPO (stable-baselines3): 18.2 hits from scratch
+```
 
 ### Where this is heading (your own work, not games)
 

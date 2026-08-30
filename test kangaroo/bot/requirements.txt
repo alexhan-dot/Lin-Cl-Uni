@@ -1,3 +1,6 @@
 numpy>=1.24
 torch>=2.0
 pygame>=2.5
+# for the PPO track (train_ppo.py, gym_wrapper.py):
+gymnasium>=0.29
+stable-baselines3>=2.0
