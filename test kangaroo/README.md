@@ -24,6 +24,36 @@ against a target where automating is completely fine.
 |------|-----------|
 | `kangaroo-console.html` | The UX/UI design — an interactive mockup of the bot's control panel (open in a browser). |
 | `docs/ARCHITECTURE.md` | How a vision bot is built: the 4-part pipeline + the state machine. |
+| `docs/AI_ROADMAP.md` | How the AI learns from you and grows: imitation learning → reinforcement learning. |
+| `bot/` | Runnable Python: the practice game env + the full learning pipeline. |
+
+## The AI pipeline (runnable)
+
+An agent that **learns from your play, then improves on its own** — all on the
+practice game. Verified end-to-end (imitation reaches ~18 hits/episode vs a
+random policy's ~0.2).
+
+```
+cd bot
+pip install -r requirements.txt
+
+python play_and_record.py                          # 1. you play -> demos
+python train_bc.py                                 # 2. AI imitates you
+python train_reinforce.py --init data/policy_bc.pt # 3. AI grows past you
+python evaluate.py --policy data/policy_rl.pt --render   # watch it play
+```
+
+No display / no recording yet? `python synth_demos.py` fakes the demos so you
+can test the whole chain first. See `docs/AI_ROADMAP.md` for the full walkthrough.
+
+### Where this is heading (your own work, not games)
+
+The same pipeline — capture the screen, record your clicks and mouse moves,
+learn the pattern, automate it — applies to **your own desktop workflows (RPA)**.
+That's legitimate: your machine, your tasks, no third-party rules broken. (Keep
+secrets like passwords out of the training data, and don't automate a system
+whose own policy forbids it.) The practice game is where you learn the technique
+safely before pointing it at your real work.
 
 ## The design, in one screen
 

@@ -1,0 +1,6 @@
+# trained artifacts and recorded data — regenerate locally, don't commit
+bot/data/
+*.pt
+*.npz
+__pycache__/
+*.pyc
