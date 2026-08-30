@@ -4,3 +4,6 @@ bot/data/
 *.npz
 __pycache__/
 *.pyc
+
+# recorded/generated RPA sessions (regenerate locally)
+rpa/sessions/

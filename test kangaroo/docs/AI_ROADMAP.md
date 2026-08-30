@@ -72,6 +72,8 @@ python evaluate.py --policy data/policy_rl.pt --render
 | REINFORCE, from scratch | `train_reinforce.py` | ~0.1 |
 | REINFORCE, warm-started from BC | `train_reinforce.py --init …` | ~18 |
 | **PPO (stable-baselines3)** | `train_ppo.py` | **18.2** |
+| DAgger from pixels | `dagger_pixels.py` | 0.1 → **2.9** (climbs each iter) |
+| PPO from pixels (CnnPolicy) | `train_ppo_pixels.py` | needs ~200k+ steps (runs; long) |
 
 ## Extra track A — the AI sees pixels (real screen recognition)
 
@@ -112,14 +114,23 @@ The same pipeline, pointed at your real work instead of a game, lives in
 into a (screen → click) training set — the desktop twin of `train_bc_pixels.py`.
 See `../rpa/README.md`.
 
+## Now built (the three follow-ups)
+
+- **RL from pixels** — `pixel_gym.py` + `train_ppo_pixels.py` (SB3 `CnnPolicy`).
+  Reward-driven, so it fixes the BC distribution-shift plateau; needs a long run.
+- **DAgger** — `dagger_pixels.py`. Relabels the agent's own trajectories with the
+  expert; climbed 0.1 → 2.9 over 5 iterations, past plain BC's 1.9.
+- **RPA end-to-end** — `../rpa/` and the Windows app `../app/kangaroo_studio.py`:
+  record your screen + clicks, train a screen→click model, review it, dry-run,
+  then run. `../rpa/synth_session.py` lets you test the chain with no display
+  (verified: click error 0.3 px).
+
 ## Where to go further
 
-- **RL from pixels:** run PPO with SB3's `CnnPolicy` on a pixel `gymnasium`
-  wrapper of `PixelKangaroo` — fixes the BC distribution-shift plateau above.
 - **Harder game:** obstacles, multiple targets, an accuracy score — richer
   environment, richer learned behavior.
-- **DAgger:** iteratively relabel the agent's own trajectories with the expert to
-  beat plain behavior cloning.
+- **Recurrent / stacked frames for RPA:** give the clicker model history so it
+  can automate multi-step sequences, not just single clicks.
 
 ## Install
 

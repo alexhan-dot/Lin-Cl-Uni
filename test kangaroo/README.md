@@ -26,7 +26,20 @@ against a target where automating is completely fine.
 | `docs/ARCHITECTURE.md` | How a vision bot is built: the 4-part pipeline + the state machine. |
 | `docs/AI_ROADMAP.md` | How the AI learns from you and grows: imitation → RL → pixels → PPO. |
 | `bot/` | Runnable Python: the practice game env + the full learning pipeline. |
-| `rpa/` | Your-own-desktop automation: screen + mouse/key recorder, replay, dataset builder. |
+| `rpa/` | Your-own-desktop automation: screen + mouse/key recorder, replay, dataset builder, screen→click model. |
+| `app/` | **Kangaroo Studio** — the Windows desktop app tying it all together. |
+
+## The Windows app (Kangaroo Studio)
+
+One window for the whole flow — **pick a region (any size) → record → train →
+review → check → run.** Tkinter-based, so the GUI needs no extra install.
+
+```
+pip install -r rpa/requirements.txt
+python app/kangaroo_studio.py          # or double-click app/run_studio.bat on Windows
+```
+
+See `app/README.md` for the five steps and safety notes.
 
 ## The AI pipeline (runnable)
 
