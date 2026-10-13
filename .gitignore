@@ -1,0 +1,6 @@
+.market-data/
+dist/
+.wrangler/
+.env
+__pycache__/
+*.py[cod]

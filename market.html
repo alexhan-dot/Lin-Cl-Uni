@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="리니지 클래식 서버별 아데나 판매 호가와 거래완료 표시 가격을 비교하세요. 거래소 공개 매물을 10분마다 수집합니다.">
+  <meta name="theme-color" content="#102127">
+  <title>클래식 시세판 · 리니지 클래식 아데나 시세</title>
+  <link rel="stylesheet" href="market.css">
+  <script src="market.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문 바로가기</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#main" aria-label="클래식 시세판 홈">
+        <span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 28 28"><path d="M5 20V8M11 20V13M17 20V5M23 20V10"/><path class="symbol-line" d="m4 12 7-5 6 3 7-7"/></svg></span>
+        <strong>클래식 시세판</strong><span class="beta">BETA</span>
+      </a>
+      <nav aria-label="주요 메뉴"><a href="#server-board" class="nav-active">아데나 시세</a><a href="#market-list">거래소 매물</a><a href="academy.html">육성 상담 <span aria-hidden="true">↗</span></a></nav>
+      <span class="header-badge"><span class="status-dot" aria-hidden="true"></span>10분 수집 주기</span>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-inner">
+        <div class="hero-copy"><p class="eyebrow">LINEAGE CLASSIC · MARKET WATCH</p><h1 id="hero-title">서버별 아데나 가격을<br><span>한눈에.</span></h1><p class="hero-lede">흩어져 있는 거래소의 가격을 한곳에서 비교하세요.<br>판매 호가와 거래완료 표시 가격을 구분해서 보여드립니다.</p><a class="hero-link" href="#server-board">내 서버 시세 확인하기 <span aria-hidden="true">↓</span></a></div>
+        <div class="hero-visual" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><div class="hero-coin">A<span>ADENA</span></div><span class="visual-tag tag-one"><i></i> 거래소 비교</span><span class="visual-tag tag-two">₩ / 100만 아데나</span><svg class="hero-spark" viewBox="0 0 350 90"><path d="M0 73 40 63 80 67 120 42 160 49 200 24 235 35 275 14 315 20 350 4"/></svg></div>
+      </div>
+      <div class="hero-footer"><span><span class="status-dot" aria-hidden="true"></span><span id="collection-status">첫 수집 결과를 불러오는 중</span></span><span id="last-update">최근 수집 —</span><span id="next-update">다음 수집 —</span></div>
+    </section>
+
+    <div class="content-shell">
+      <div class="notice" id="global-notice" role="status" hidden></div>
+      <section class="source-strip" aria-label="거래소별 수집 상태" id="source-status"></section>
+
+      <section class="overview" aria-label="수집한 매물 요약">
+        <div class="metric"><span class="metric-label">판매 호가 중앙값 <span class="tiny-unit">/ 100만</span></span><strong id="metric-median">—</strong><span class="metric-note">현재 필터의 수집 매물 기준</span></div>
+        <div class="metric"><span class="metric-label">최저 판매 호가 <span class="tiny-unit">/ 100만</span></span><strong id="metric-lowest">—</strong><span class="metric-note">수량·구매 조건은 원문 확인</span></div>
+        <div class="metric"><span class="metric-label">수집된 판매 매물</span><strong id="metric-listings">—</strong><span class="metric-note" id="metric-server-count">서버 정보 확인 중</span></div>
+        <div class="metric"><span class="metric-label">거래완료 표시 매물</span><strong id="metric-completed">—</strong><span class="metric-note">플랫폼 표시 기준 · 체결시각 미확인</span></div>
+      </section>
+
+      <section class="section server-section" id="server-board" aria-labelledby="servers-title">
+        <div class="section-heading"><div><p class="section-kicker">SERVER PRICES</p><h2 id="servers-title">서버별 시세</h2></div><span class="section-description">판매 호가 중앙값 · 100만 아데나 기준</span></div>
+        <div class="controls">
+          <label class="search-field"><svg aria-hidden="true" viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg><span class="sr-only">서버 또는 매물 검색</span><input id="search-input" type="search" placeholder="서버 또는 매물 검색" autocomplete="off"></label>
+          <label class="select-field"><span class="sr-only">매물 서버 선택</span><select id="server-filter"><option value="all">전체 서버</option></select></label>
+          <button class="favorites-toggle" id="favorites-toggle" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> 관심 서버</button>
+        </div>
+        <div class="server-grid" id="server-grid"><p class="empty-state">서버별 수집 결과를 불러오고 있습니다.</p></div>
+        <p class="coverage-note" id="coverage-note">일부 공개 매물을 수집한 참고 가격입니다. 전체 시장 시세와 다를 수 있습니다.</p>
+      </section>
+
+      <div class="analysis-layout">
+        <section class="panel trend-panel" aria-labelledby="trend-title"><div class="panel-heading"><div><p class="section-kicker">PRICE HISTORY</p><h2 id="trend-title">가격 흐름</h2></div><label class="select-field compact"><span class="sr-only">비교할 서버 선택</span><select id="comparison-server"><option value="">서버 선택</option></select></label></div><div class="trend-meta"><strong id="trend-price">—</strong><span id="trend-caption">판매 호가 중앙값 / 100만 아데나</span></div><div id="trend-chart" class="trend-chart"><div class="chart-empty"><span class="chart-empty-icon" aria-hidden="true">▥</span><strong>가격 흐름을 준비하고 있습니다</strong><p>실제 수집 기록이 쌓이면 그래프가 표시됩니다.</p></div></div><p class="panel-footnote">실제로 수집한 시점의 기록만 표시합니다.</p></section>
+        <section class="panel comparison-panel" aria-labelledby="comparison-title"><div class="panel-heading"><div><p class="section-kicker">MARKET COMPARISON</p><h2 id="comparison-title">거래소별 비교</h2></div><span id="comparison-label" class="server-pill">—</span></div><div id="source-comparison" class="comparison-list"><p class="empty-state">서버를 선택하면 거래소별 가격을 비교할 수 있습니다.</p></div><p class="panel-footnote">거래완료는 거래소가 완료로 표시한 매물입니다.</p></section>
+      </div>
+
+      <section class="section listings-section" id="market-list" aria-labelledby="listings-title">
+        <div class="section-heading"><div><p class="section-kicker">COLLECTED LISTINGS</p><h2 id="listings-title">수집한 거래소 매물</h2></div><span class="section-description" id="listing-count">0개 매물</span></div>
+        <div class="list-controls"><div class="filter-tabs" role="group" aria-label="매물 종류 선택"><button type="button" data-kind="all" aria-pressed="true">전체</button><button type="button" data-kind="ask" aria-pressed="false">판매 호가</button><button type="button" data-kind="completed" aria-pressed="false">거래완료 표시</button></div><label class="sort-control"><span>정렬</span><select id="sort-filter"><option value="price-asc">단가 낮은 순</option><option value="price-desc">단가 높은 순</option><option value="recent">최근 수집 순</option></select></label></div>
+        <div class="table-wrap"><table class="listing-table"><caption class="sr-only">수집한 아데나 매물의 거래소, 서버, 종류, 100만 아데나당 가격, 수량과 원문 링크</caption><thead><tr><th scope="col">서버 / 매물</th><th scope="col">거래소</th><th scope="col">구분</th><th scope="col" class="number-cell">100만당 가격</th><th scope="col" class="number-cell">수량</th><th scope="col">수집 시각</th><th scope="col"><span class="sr-only">원문</span></th></tr></thead><tbody id="listing-body"><tr><td colspan="7" class="table-empty">매물을 불러오는 중입니다.</td></tr></tbody></table></div>
+        <p class="listing-disclaimer">표시 가격은 참고용입니다. 실제 구매 가능 수량, 최소 구매금액, 수수료와 매물 상태는 거래소 원문에서 확인하세요.</p>
+      </section>
+
+      <aside class="promotion" aria-labelledby="promotion-title"><div class="promotion-mark" aria-hidden="true">LC</div><div class="promotion-copy"><span class="promotion-label">육성 서비스 안내</span><h2 id="promotion-title">시세 확인 다음은, 내 캐릭터 성장 계획.</h2><p>리니지 클래식 대학교에서 육성 과정과 상담 안내를 확인하세요.</p></div><a class="promotion-link" href="academy.html">육성 상담 알아보기 <span aria-hidden="true">↗</span></a></aside>
+      <section class="method-note" aria-labelledby="method-title"><h2 id="method-title">시세판 읽는 방법</h2><div><p><strong>판매 호가</strong> 판매자가 등록한 가격입니다. 실제로 거래된 가격을 의미하지 않습니다.</p><p><strong>거래완료 표시</strong> 거래소에서 완료로 표시한 매물입니다. 실제 체결시각은 확인되지 않을 수 있습니다.</p><p><strong>수집 범위</strong> 일부 공개 매물 기준이며 광고·중복 매물과 구매 조건에 따라 차이가 생길 수 있습니다. 10분 수집을 목표로 하며 출처 지연 시 이전 값과 수집 상태를 표시합니다.</p></div></section>
+    </div>
+  </main>
+  <footer class="site-footer"><a class="footer-brand" href="#main">클래식 시세판 <span>BETA</span></a><p>리니지 클래식 팬 제작 가격 정보 · 각 거래소 및 게임사와 무관합니다.</p><span>가격을 비교하고, 더 나은 선택을.</span></footer>
+  <div class="sr-only" id="live-status" role="status" aria-live="polite"></div>
+</body>
+</html>
