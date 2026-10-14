@@ -1,0 +1,13 @@
+name = "classic-price-board"
+main = "worker.mjs"
+compatibility_date = "2026-01-01"
+
+[assets]
+directory = "../dist"
+binding = "ASSETS"
+run_worker_first = ["/api/*", "/internal/*"]
+
+[[kv_namespaces]]
+binding = "MARKET"
+# Replace with the namespace created in your own Cloudflare account.
+id = "REPLACE_WITH_NAMESPACE_ID"

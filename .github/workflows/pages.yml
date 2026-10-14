@@ -5,6 +5,8 @@ on:
     branches:
       - main
   workflow_dispatch:
+  schedule:
+    - cron: '*/10 * * * *'
 
 permissions:
   contents: read
@@ -21,17 +23,38 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Configure Pages
+        id: pages
         uses: actions/configure-pages@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Refresh sampled prices
+        env:
+          PREVIOUS_BASE_URL: ${{ steps.pages.outputs.base_url }}
+        run: |
+          python3 scripts/refresh_static.py \
+            --previous-url "${PREVIOUS_BASE_URL%/}/test/data/prices.json" \
+            --data-dir .market-data \
+            --output .market-data/prices.json
+
+      - name: Build landing and market test pages
+        env:
+          AUTOMATIC_MARKET_UPDATES: ${{ github.ref == 'refs/heads/main' }}
+        run: python3 scripts/build_market_demo.py --preserve-landing --snapshot .market-data/prices.json --output dist
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
 
       - name: Deploy
         id: deployment
