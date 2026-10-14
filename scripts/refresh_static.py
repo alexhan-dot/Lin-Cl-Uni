@@ -87,8 +87,10 @@ def fetch_previous(url):
         raise PreviousSnapshotError("Published snapshot could not be reached") from error
 
 
-def refresh(previous_url, data_dir, output, *, collector=None, fetcher=fetch_previous, now=None, pages=3):
-    store = Store(data_dir, interval_seconds=600, pages_per_source=pages)
+def refresh(previous_url, data_dir, output, *, collector=None, item_collector=None,
+            item_interval=3600, fetcher=fetch_previous, now=None, pages=3):
+    store = Store(data_dir, interval_seconds=600, pages_per_source=pages,
+                  item_interval_seconds=item_interval)
     if previous_url:
         try:
             previous = fetcher(previous_url)
@@ -96,7 +98,8 @@ def refresh(previous_url, data_dir, output, *, collector=None, fetcher=fetch_pre
                 store.seed_snapshot(previous)
         except (PreviousSnapshotError, ValueError, TypeError) as error:
             LOGGER.warning("Previous snapshot unavailable (%s); trying a fresh collection", type(error).__name__)
-    service = PriceService(store, collector=collector, interval=600, pages=pages,
+    service = PriceService(store, collector=collector, item_collector=item_collector,
+                           interval=600, item_interval=item_interval, pages=pages,
                            utcnow=(lambda: now) if now is not None else (lambda: datetime.now(timezone.utc)))
     payload = service.run_cycle()
     if not payload["listings"]:
@@ -111,10 +114,14 @@ def main(argv=None):
     parser.add_argument("--data-dir", type=Path, default=ROOT / ".market-data")
     parser.add_argument("--output", type=Path, default=ROOT / ".market-data" / "prices.json")
     parser.add_argument("--pages", type=int, choices=(1, 2, 3), default=3)
+    parser.add_argument("--item-interval", type=int, default=3600)
     args = parser.parse_args(argv)
+    if args.item_interval <= 0:
+        parser.error("--item-interval must be positive")
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     try:
-        payload = refresh(args.previous_url, args.data_dir, args.output, pages=args.pages)
+        payload = refresh(args.previous_url, args.data_dir, args.output,
+                          pages=args.pages, item_interval=args.item_interval)
     except (ValueError, RuntimeError, OSError) as error:
         LOGGER.error("Static snapshot refresh failed (%s)", type(error).__name__)
         return 1

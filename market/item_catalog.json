@@ -1,0 +1,734 @@
+{
+  "mappingVersion": "lineage-classic-2026-10-14-v2",
+  "game": {
+    "id": "lineage-classic",
+    "name": "리니지 클래식"
+  },
+  "verifiedAt": "2026-10-14T01:07:10Z",
+  "verificationScope": "NC 리니지 클래식 공식 가이드 본문에서 확인한 품목만 official_verified. 나머지는 리니지 클래식 공개 매물 표현·별칭만 확인한 marketplace_only이며 공식명 확인 대기. 다른 리니지 버전 자료를 등록 근거로 사용하지 않음.",
+  "sources": [
+    {
+      "id": "barotem-classic-public-listings",
+      "url": "https://www.barotem.com/product/lists/2381r870",
+      "type": "marketplace_observation",
+      "verifiedAt": "2026-10-14",
+      "evidence": "research/source-probes/barotem-item-data-post.json",
+      "scope": "기존 리니지 클래식 공개 아이템 목록 60건에서 개인정보 없이 품목 표현만 검토."
+    },
+    {
+      "id": "nc-classic-guide-armor",
+      "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%B0%A9%EC%96%B4%EA%B5%AC",
+      "type": "official_game_reference",
+      "verifiedAt": "2026-10-14T00:57:31Z",
+      "evidence": "research/source-probes/catalog-classic-guide-armor.json",
+      "scope": "NC 리니지 클래식 공식 가이드 본문 명칭 확인."
+    },
+    {
+      "id": "nc-classic-guide-accessories",
+      "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EC%9E%A5%EC%8B%A0%EA%B5%AC",
+      "type": "official_game_reference",
+      "verifiedAt": "2026-10-14T00:57:31Z",
+      "evidence": "research/source-probes/catalog-classic-guide-accessories.json",
+      "scope": "NC 리니지 클래식 공식 가이드 본문 명칭 확인."
+    },
+    {
+      "id": "nc-classic-guide-%EB%A0%88%EB%B2%A8%20%ED%80%98%EC%8A%A4%ED%8A%B8",
+      "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%A0%88%EB%B2%A8%20%ED%80%98%EC%8A%A4%ED%8A%B8",
+      "type": "official_game_reference",
+      "verifiedAt": "2026-10-14T01:03:05Z",
+      "scope": "NC 리니지 클래식 serviceId=57 공식 가이드 본문 품목명 확인."
+    },
+    {
+      "id": "nc-classic-guide-%EB%8D%98%EC%A0%84",
+      "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%8D%98%EC%A0%84",
+      "type": "official_game_reference",
+      "verifiedAt": "2026-10-14T01:03:05Z",
+      "scope": "NC 리니지 클래식 serviceId=57 공식 가이드 본문 품목명 확인."
+    },
+    {
+      "id": "nc-classic-guide-%EB%AA%BD%ED%99%98%EC%9D%98%20%EC%84%AC",
+      "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%AA%BD%ED%99%98%EC%9D%98%20%EC%84%AC",
+      "type": "official_game_reference",
+      "verifiedAt": "2026-10-14T01:03:05Z",
+      "scope": "NC 리니지 클래식 serviceId=57 공식 가이드 본문 품목명 확인."
+    },
+    {
+      "id": "nc-classic-guide-%ED%95%84%EB%93%9C%20%EC%82%AC%EB%83%A5%ED%84%B0",
+      "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%ED%95%84%EB%93%9C%20%EC%82%AC%EB%83%A5%ED%84%B0",
+      "type": "official_game_reference",
+      "verifiedAt": "2026-10-14T01:03:05Z",
+      "scope": "NC 리니지 클래식 serviceId=57 공식 가이드 본문 품목명 확인."
+    },
+    {
+      "id": "barotem-classic-public-listings-three-pages-20261014",
+      "url": "https://www.barotem.com/product/lists/2381r870",
+      "type": "marketplace_observation",
+      "verifiedAt": "2026-10-14T01:07:10Z",
+      "scope": "리니지 클래식 공개 일반 매물 3페이지 180건에서 별칭 싸울 2건·축데이 1건을 관측. 원문 제목·판매자 정보를 보관하지 않은 빈도 근거.",
+      "aliasOccurrences": {
+        "싸울": 2,
+        "축데이": 1
+      }
+    }
+  ],
+  "entries": [
+    {
+      "id": "lc-fire-sword",
+      "name": "화염의 검",
+      "aliases": [
+        {
+          "value": "화검",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "화염의검",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "weapon",
+      "enhanceable": true,
+      "officialVerified": false,
+      "verification": "marketplace_only",
+      "officialSource": null,
+      "referenceUrl": "https://www.barotem.com/product/lists/2381r870",
+      "note": "리니지 클래식 판매 목록에서 관측한 품목 표현. NC 공식 아이템명 확인 대기."
+    },
+    {
+      "id": "lc-wind-dragon-armor",
+      "name": "풍룡 비늘 갑옷",
+      "aliases": [
+        {
+          "value": "풍갑",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "풍룡비늘갑옷",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "armor",
+      "enhanceable": true,
+      "officialVerified": true,
+      "verification": "official_verified",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%8D%98%EC%A0%84",
+        "title": "NC 리니지 클래식 공식 가이드: 던전",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6586,
+        "serviceId": 57,
+        "paragraphId": 25306,
+        "quote": " 중 바람 속성을 상징하는 용이다. 지역 몬스터 이름 주요 드랍 아이템 풍룡의 둥지 - 린드비오르의 레어 린드비오르 풍룡 비늘 갑옷, 싸울아비 장검, 투명 망토, 풍룡 비늘 등 아이템 획득 가능"
+      },
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%8D%98%EC%A0%84",
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-courage-boots",
+      "name": "용기의 부츠",
+      "aliases": [
+        {
+          "value": "용기부츠",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "용기 부츠",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "armor",
+      "enhanceable": true,
+      "officialVerified": true,
+      "verification": "official_verified",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%A0%88%EB%B2%A8%20%ED%80%98%EC%8A%A4%ED%8A%B8",
+        "title": "NC 리니지 클래식 공식 가이드: 레벨 퀘스트",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6576,
+        "serviceId": 57,
+        "paragraphId": 24705,
+        "quote": " 오아시스 마크 붉은 기사의 검, 붉은 기사의 방패 45레벨 은기사 마을 줄리 용기의 벨트 50레벨 웰던 마을 마샤 용기의 부츠 • 요정 레벨 시작 위치 시작NPC 보상 15레벨 화전민 마을 오스 민첩함의 투구 또는 체력의 투구 택1 30레벨 요정 숲 마을 숲과 요정의 어머니(세계수) 요"
+      },
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%A0%88%EB%B2%A8%20%ED%80%98%EC%8A%A4%ED%8A%B8",
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-steel-boots",
+      "name": "강철 부츠",
+      "aliases": [
+        {
+          "value": "강부",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "강철부츠",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "armor",
+      "enhanceable": true,
+      "officialVerified": false,
+      "verification": "marketplace_only",
+      "officialSource": null,
+      "referenceUrl": "https://www.barotem.com/product/lists/2381r870",
+      "note": "리니지 클래식 판매 목록에서 관측한 품목 표현. NC 공식 아이템명 확인 대기."
+    },
+    {
+      "id": "lc-melchior-cap",
+      "name": "메르키오르 모자",
+      "aliases": [
+        {
+          "value": "메르모",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "메르키오르모자",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "armor",
+      "enhanceable": true,
+      "officialVerified": false,
+      "verification": "marketplace_only",
+      "officialSource": null,
+      "referenceUrl": "https://www.barotem.com/product/lists/2381r870",
+      "note": "리니지 클래식 판매 목록에서 관측한 품목 표현. NC 공식 아이템명 확인 대기."
+    },
+    {
+      "id": "lc-underwater-boots",
+      "name": "수중 부츠",
+      "aliases": [
+        {
+          "value": "수중부츠",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "armor",
+      "enhanceable": true,
+      "officialVerified": true,
+      "verification": "official_verified",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%8D%98%EC%A0%84",
+        "title": "NC 리니지 클래식 공식 가이드: 던전",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6586,
+        "serviceId": 57,
+        "paragraphId": 24848,
+        "quote": "명 몬스터 위치 갑옷 마법 주문서 크랩맨 에바 왕국 던전 2, 3층 흑단 막대 악어 에바 왕국 던전 1, 2, 3층 수중 부츠 ※ 에바 왕국 던전의 출현 몬스터와 주요 보상은 [ 몬스터 사전 ]에서 확인 가능하다."
+      },
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%8D%98%EC%A0%84",
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-mail-breaker",
+      "name": "메일 브레이커",
+      "aliases": [
+        {
+          "value": "메일브레이커",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "weapon",
+      "enhanceable": true,
+      "officialVerified": false,
+      "verification": "marketplace_only",
+      "officialSource": null,
+      "referenceUrl": "https://www.barotem.com/product/lists/2381r870",
+      "note": "리니지 클래식 판매 목록에서 관측한 품목 표현. NC 공식 아이템명 확인 대기."
+    },
+    {
+      "id": "lc-mana-staff",
+      "name": "마나의 지팡이",
+      "aliases": [
+        {
+          "value": "마나지팡이",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "마나 지팡이",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "weapon",
+      "enhanceable": true,
+      "officialVerified": true,
+      "verification": "official_verified",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%A0%88%EB%B2%A8%20%ED%80%98%EC%8A%A4%ED%8A%B8",
+        "title": "NC 리니지 클래식 공식 가이드: 레벨 퀘스트",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6576,
+        "serviceId": 57,
+        "paragraphId": 24705,
+        "quote": "레벨 말하는 섬 마을 젬 마력서 30레벨 말하는 섬 필드 게렝 수정 지팡이 45레벨 말하는 섬 마을 젬 마나 망토, 마나의 지팡이 50레벨 오렌 마을 - 상아탑 3층 타라 마나의 부츠"
+      },
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%A0%88%EB%B2%A8%20%ED%80%98%EC%8A%A4%ED%8A%B8",
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-crystal-gloves",
+      "name": "수정 장갑",
+      "aliases": [
+        {
+          "value": "수장",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "수정장갑",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "armor",
+      "enhanceable": true,
+      "officialVerified": true,
+      "verification": "official_verified",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%8D%98%EC%A0%84",
+        "title": "NC 리니지 클래식 공식 가이드: 던전",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6586,
+        "serviceId": 57,
+        "paragraphId": 25020,
+        "quote": " (이뮨 투함) 리빙 아머 상아탑 4~5층 정령의 수정 (블러드 투 소울) 아이언 골렘 정령의 수정 (아이언 스킨) 수정 장갑 유령 상아탑 6~7층 정령의 수정(에어리어 오브 사일런스) 정령의 수정 (스톰 샷) 데스 상아탑 8층 ※ 상아탑의 출현 몬스터와 주요 보상은 [ 몬스터 사전 ]"
+      },
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%8D%98%EC%A0%84",
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-hunter-bow",
+      "name": "사냥꾼의 활",
+      "aliases": [
+        {
+          "value": "사활",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "사냥꾼의활",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "weapon",
+      "enhanceable": true,
+      "officialVerified": false,
+      "verification": "marketplace_only",
+      "officialSource": null,
+      "referenceUrl": "https://www.barotem.com/product/lists/2381r870",
+      "note": "리니지 클래식 판매 목록에서 관측한 품목 표현. NC 공식 아이템명 확인 대기."
+    },
+    {
+      "id": "lc-fire-bow",
+      "name": "화염의 활",
+      "aliases": [
+        {
+          "value": "화활",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "화염의활",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "weapon",
+      "enhanceable": true,
+      "officialVerified": false,
+      "verification": "marketplace_only",
+      "officialSource": null,
+      "referenceUrl": "https://www.barotem.com/product/lists/2381r870",
+      "note": "리니지 클래식 판매 목록에서 관측한 품목 표현. NC 공식 아이템명 확인 대기."
+    },
+    {
+      "id": "lc-polymorph-control-ring",
+      "name": "변신 조종 반지",
+      "aliases": [
+        {
+          "value": "변반",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "변신조종반지",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "accessory",
+      "enhanceable": false,
+      "officialVerified": true,
+      "verification": "official_verified",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EC%9E%A5%EC%8B%A0%EA%B5%AC",
+        "title": "NC 리니지 클래식 공식 가이드: 장신구",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6583,
+        "serviceId": 57,
+        "paragraphId": 24731,
+        "quote": "이 주로 붙어 있고, 퀘스트 및 제작에 관련된 아이템들이 많다. 반지 속성 저항력이 주요 옵션, 순간이동 조종반지, 변신 조종 반지와 같이 독립적인 기능을 가진 아이템들도 존재한다. 벨트 HP, MP에 관련된 옵션이 주를 이루고, 무게 게이지를 증가시켜주는 벨트가 다수 존재한다."
+      },
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EC%9E%A5%EC%8B%A0%EA%B5%AC",
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-teleport-control-ring",
+      "name": "순간이동 조종반지",
+      "aliases": [
+        {
+          "value": "이반",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "순간이동조종반지",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "accessory",
+      "enhanceable": false,
+      "officialVerified": true,
+      "verification": "official_verified",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EC%9E%A5%EC%8B%A0%EA%B5%AC",
+        "title": "NC 리니지 클래식 공식 가이드: 장신구",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6583,
+        "serviceId": 57,
+        "paragraphId": 24731,
+        "quote": " 스탯에 관련된 옵션이 주로 붙어 있고, 퀘스트 및 제작에 관련된 아이템들이 많다. 반지 속성 저항력이 주요 옵션, 순간이동 조종반지, 변신 조종 반지와 같이 독립적인 기능을 가진 아이템들도 존재한다. 벨트 HP, MP에 관련된 옵션이 주를 이루고, 무게 게이지를 증가시켜주는 벨트가 다수 존재"
+      },
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EC%9E%A5%EC%8B%A0%EA%B5%AC",
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-ogre-belt",
+      "name": "오우거의 벨트",
+      "aliases": [
+        {
+          "value": "오우거벨트",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "오우거 벨트",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "accessory",
+      "enhanceable": false,
+      "officialVerified": true,
+      "verification": "official_verified",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%ED%95%84%EB%93%9C%20%EC%82%AC%EB%83%A5%ED%84%B0",
+        "title": "NC 리니지 클래식 공식 가이드: 필드 사냥터",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6588,
+        "serviceId": 57,
+        "paragraphId": 24752,
+        "quote": ", 버그베어 해골 궁수/창병 등 [주요 획득 가능 아이템] 아이템 명 몬스터 광전사의 도끼 오우거 마법의 투구: 힘 오우거의 벨트 오우거의 피 ※ 이 외 글루디오 필드 사냥터의 출현 몬스터와 주요 보상은 [ 몬스터 사전 ]에서 확인 가능하다."
+      },
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%ED%95%84%EB%93%9C%20%EC%82%AC%EB%83%A5%ED%84%B0",
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-elder-necklace",
+      "name": "장로 목걸이",
+      "aliases": [
+        {
+          "value": "장로목",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "장로목걸이",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "accessory",
+      "enhanceable": false,
+      "officialVerified": false,
+      "verification": "marketplace_only",
+      "officialSource": null,
+      "referenceUrl": "https://www.barotem.com/product/lists/2381r870",
+      "note": "리니지 클래식 판매 목록에서 관측한 품목 표현. NC 공식 아이템명 확인 대기."
+    },
+    {
+      "id": "lc-triple-arrow",
+      "name": "정령의 수정(트리플 애로우)",
+      "aliases": [
+        {
+          "value": "트리플",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "트리플애로우",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "트리플 애로우",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "skillbook",
+      "enhanceable": false,
+      "officialVerified": true,
+      "verification": "official_verified",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%AA%BD%ED%99%98%EC%9D%98%20%EC%84%AC",
+        "title": "NC 리니지 클래식 공식 가이드: 몽환의 섬",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6628,
+        "serviceId": 57,
+        "paragraphId": 24935,
+        "quote": "), 퓨어 엘릭서 유니콘 무속성 엘릭서(CHA) * 몽환의 섬(PC)에서 미출현 나이트메어 무속성 엘릭서(WIS), 정령의 수정(트리플 애로우) 나이트메어를 만나기 위해서는 유니콘에게 캔슬레이션을 사용해야 한다. * 몽환의 섬(PC)에서 미출현"
+      },
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%AA%BD%ED%99%98%EC%9D%98%20%EC%84%AC",
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-shock-stun",
+      "name": "기술서 (쇼크 스턴)",
+      "aliases": [
+        {
+          "value": "쇼크스턴",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        },
+        {
+          "value": "쇼크 스턴",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "skillbook",
+      "enhanceable": false,
+      "officialVerified": true,
+      "verification": "official_verified",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%ED%95%84%EB%93%9C%20%EC%82%AC%EB%83%A5%ED%84%B0",
+        "title": "NC 리니지 클래식 공식 가이드: 필드 사냥터",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6588,
+        "serviceId": 57,
+        "paragraphId": 25019,
+        "quote": " 정령의 수정 (네이쳐스 터치) 마법서 (블레스 웨폰) 좀비 엘모어 마법사 마법서 (콘 오브 콜드) 마법서(풀 힐) 기술서 (쇼크 스턴) 좀비 엘모어 장군 기술서(리덕션 아머) 기술서 (바운스 어택) ※ 이 외 오렌 지역 필드 사냥터의 출현 몬스터와 주요 보상은 [ 몬스터 사전 ]에서 확인 가능하"
+      },
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%ED%95%84%EB%93%9C%20%EC%82%AC%EB%83%A5%ED%84%B0",
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-elven-shield",
+      "name": "요정족 방패",
+      "aliases": [
+        {
+          "value": "요방",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "category": "armor",
+      "enhanceable": true,
+      "officialVerified": true,
+      "verification": "official_verified",
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%B0%A9%EC%96%B4%EA%B5%AC",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%B0%A9%EC%96%B4%EA%B5%AC",
+        "title": "NC 리니지 클래식 공식 가이드: 방어구",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6581,
+        "serviceId": 57,
+        "paragraphId": 24723,
+        "quote": "비슷한 수준의 물리 방어력을 제공한다. 방패 한 손 무기를 사용할 때만 착용할 수 있는 방어구. 붉은 기사의 방패와 요정족 방패가 가장 대중적이다. • AC와 MR - AC의 경우 방어구를 착용할 수록 캐릭터의 AC는 낮아진다. - AC가 낮아질 수록 적의 물리 공격에 맞을 확률이 낮아진"
+      },
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-ssaulabi-sword",
+      "name": "싸울아비 장검",
+      "category": "weapon",
+      "enhanceable": true,
+      "aliases": [
+        {
+          "value": "싸울",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings-three-pages-20261014"
+        }
+      ],
+      "officialVerified": true,
+      "verification": "official_verified",
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%8D%98%EC%A0%84",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%8D%98%EC%A0%84",
+        "title": "NC 리니지 클래식 공식 가이드: 던전",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6586,
+        "serviceId": 57,
+        "paragraphId": 24885,
+        "quote": "는 용 중 불 속성을 상징하는 용이다. 지역 몬스터 이름 주요 드랍 아이템 화룡의 둥지 - 발라카스의 레어 발라카스 싸울아비 장검, 일본도, 투명 망토, 화룡 비늘 갑옷, 화룡 비늘 등 아이템 획득 가능"
+      },
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-protection-cloak",
+      "name": "보호 망토",
+      "category": "armor",
+      "enhanceable": true,
+      "aliases": [
+        {
+          "value": "보망",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "officialVerified": true,
+      "verification": "official_verified",
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%8D%98%EC%A0%84",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%8D%98%EC%A0%84",
+        "title": "NC 리니지 클래식 공식 가이드: 던전",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6586,
+        "serviceId": 57,
+        "paragraphId": 24743,
+        "quote": "득 가능 아이템] 아이템 명 몬스터 위치 단풍나무 막대 네크로맨서 글루디오 던전 6층 최고급 다이아몬드 소나무 막대 보호 망토 ※ 글루디오 던전의 출현 몬스터와 주요 보상은 [ 몬스터 사전 ]에서 확인 가능하다."
+      },
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-mana-cloak",
+      "name": "마나 망토",
+      "category": "armor",
+      "enhanceable": true,
+      "aliases": [
+        {
+          "value": "마나망토",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings"
+        }
+      ],
+      "officialVerified": true,
+      "verification": "official_verified",
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%A0%88%EB%B2%A8%20%ED%80%98%EC%8A%A4%ED%8A%B8",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%A0%88%EB%B2%A8%20%ED%80%98%EC%8A%A4%ED%8A%B8",
+        "title": "NC 리니지 클래식 공식 가이드: 레벨 퀘스트",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6576,
+        "serviceId": 57,
+        "paragraphId": 24705,
+        "quote": "C 보상 15레벨 말하는 섬 마을 젬 마력서 30레벨 말하는 섬 필드 게렝 수정 지팡이 45레벨 말하는 섬 마을 젬 마나 망토, 마나의 지팡이 50레벨 오렌 마을 - 상아탑 3층 타라 마나의 부츠"
+      },
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-magic-book",
+      "name": "마력서",
+      "category": "armor",
+      "enhanceable": true,
+      "aliases": [],
+      "officialVerified": true,
+      "verification": "official_verified",
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%A0%88%EB%B2%A8%20%ED%80%98%EC%8A%A4%ED%8A%B8",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%A0%88%EB%B2%A8%20%ED%80%98%EC%8A%A4%ED%8A%B8",
+        "title": "NC 리니지 클래식 공식 가이드: 레벨 퀘스트",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6576,
+        "serviceId": 57,
+        "paragraphId": 24705,
+        "quote": "탈) 50레벨 웰던 마을 마샤 세피아의 부츠 • 마법사 레벨 시작 위치 시작NPC 보상 15레벨 말하는 섬 마을 젬 마력서 30레벨 말하는 섬 필드 게렝 수정 지팡이 45레벨 말하는 섬 마을 젬 마나 망토, 마나의 지팡이 50레벨 오렌 마을 - 상아탑 3층 타라 마나의 부츠"
+      },
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-armor-enchant-scroll",
+      "name": "갑옷 마법 주문서",
+      "category": "scroll",
+      "enhanceable": false,
+      "aliases": [],
+      "officialVerified": true,
+      "verification": "official_verified",
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%8D%98%EC%A0%84",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%8D%98%EC%A0%84",
+        "title": "NC 리니지 클래식 공식 가이드: 던전",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6586,
+        "serviceId": 57,
+        "paragraphId": 24743,
+        "quote": "e으로 설정되어 있으며, 사망 또는 귀환 시 글루딘 마을로 이동된다. - 글루디오 던전 7층에서 NPC 오림을 통해 갑옷 마법 주문서를 구매할 수 있다. [ 보스 몬스터] 지역 몬스터 이름 주요 드랍 아이템 글루디오 던전 3~4층 카스파 패밀리 변신 조종 반지, 마법서, 투명 망토 등 아이템 "
+      },
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-blessed-weapon-enchant-scroll",
+      "name": "축복 받은 무기 마법 주문서",
+      "category": "scroll",
+      "enhanceable": false,
+      "aliases": [
+        {
+          "value": "축데이",
+          "confidence": "observed",
+          "sourceId": "barotem-classic-public-listings-three-pages-20261014"
+        }
+      ],
+      "inherentBlessing": "blessed",
+      "officialVerified": true,
+      "verification": "official_verified",
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%AA%BD%ED%99%98%EC%9D%98%20%EC%84%AC",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%AA%BD%ED%99%98%EC%9D%98%20%EC%84%AC",
+        "title": "NC 리니지 클래식 공식 가이드: 몽환의 섬",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6628,
+        "serviceId": 57,
+        "paragraphId": 24935,
+        "quote": "땅 기술서 (바운스 어택) [주요 몬스터 및 드랍 아이템 정보] 주요 몬스터 속성 주요 리워드 특징 불의 대정령 불 축복 받은 무기 마법 주문서, 엘릭서(STR), 퓨어 엘릭서 물의 대정령 물 축복 받은 갑옷 마법 주문서, 엘릭서(INT), 퓨어 엘릭서 바람의 대정령 바람 축복 받은 무기 마법 주문서, "
+      },
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    },
+    {
+      "id": "lc-blessed-armor-enchant-scroll",
+      "name": "축복 받은 갑옷 마법 주문서",
+      "category": "scroll",
+      "enhanceable": false,
+      "aliases": [],
+      "inherentBlessing": "blessed",
+      "officialVerified": true,
+      "verification": "official_verified",
+      "referenceUrl": "https://lineageclassic.plaync.com/ko-kr/guidebook/view?title=%EB%AA%BD%ED%99%98%EC%9D%98%20%EC%84%AC",
+      "officialSource": {
+        "url": "https://lineageclassic.plaync.com/api/v2/lineageclassic/guide/%EB%AA%BD%ED%99%98%EC%9D%98%20%EC%84%AC",
+        "title": "NC 리니지 클래식 공식 가이드: 몽환의 섬",
+        "verifiedAt": "2026-10-14T01:03:05Z",
+        "guideId": 6628,
+        "serviceId": 57,
+        "paragraphId": 24935,
+        "quote": "속성 주요 리워드 특징 불의 대정령 불 축복 받은 무기 마법 주문서, 엘릭서(STR), 퓨어 엘릭서 물의 대정령 물 축복 받은 갑옷 마법 주문서, 엘릭서(INT), 퓨어 엘릭서 바람의 대정령 바람 축복 받은 무기 마법 주문서, 엘릭서(DEX), 퓨어 엘릭서 땅의 대정령 땅 축복 받은 갑옷 마법 주문서, "
+      },
+      "note": "리니지 클래식 NC 공식 가이드 본문에서 정확한 품목명을 확인. 판매자 표현은 별도 출처·확신도로 구분."
+    }
+  ]
+}

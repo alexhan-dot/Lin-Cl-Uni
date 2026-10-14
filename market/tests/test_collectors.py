@@ -256,5 +256,190 @@ class TransportTests(unittest.TestCase):
                 redirect.redirect_request(request, None, 302, "", {}, destination)
 
 
+ITEM_MATCH = {"itemId": "lc-fire-sword", "itemName": "화염의 검",
+              "enchant": 8, "blessing": "unknown", "mappingVersion": "test-v1"}
+
+
+def barotem_item_row(**updates):
+    values = {"category": "2381r870", "saletype": "1", "baro_price": "180000",
+              "min_cnt": "1", "work_same_cnt": "1", "saleUnitText": " 개",
+              "single_unit": "1 개", "product_name": "8화염의검 판매"}
+    values.update(updates)
+    return barotem_row(**values)
+
+
+def itembay_item_row(**updates):
+    values = {"tiItemType": 4, "iPrice": 180000, "biWantQuantity": 1,
+              "biMinQuantity": 1, "biMaxQuantity": 1, "cAddType": "2",
+              "tranPrice": "180,000", "vcSubject": "8화염의검 판매"}
+    values.update(updates)
+    return itembay_row(**values)
+
+
+class ItemParserTests(unittest.TestCase):
+    def setUp(self):
+        self.matcher = patch.object(collectors, "_catalog_match", return_value=("mapped", copy.deepcopy(ITEM_MATCH)))
+        self.match = self.matcher.start()
+        self.addCleanup(self.matcher.stop)
+
+    def test_item_price_is_one_item_not_one_million_currency(self):
+        rows, counts = collectors.parse_barotem_items(barotem_response(barotem_item_row()), OBSERVED_AT)
+        self.assertEqual(rows[0]["unitPrice"], 180000)
+        self.assertEqual(rows[0]["itemId"], "lc-fire-sword")
+        self.assertEqual(rows[0]["enchant"], 8)
+        self.assertEqual(rows[0]["blessing"], "unknown")
+        self.assertEqual(counts, {"unmapped": 0, "ambiguous": 0, "invalid": 0})
+
+    def test_same_item_multiple_quantity_total_is_divided_and_passed_to_catalog(self):
+        rows, _ = collectors.parse_barotem_items(barotem_response(
+            barotem_item_row(single_unit="2 개", baro_price="360000")), OBSERVED_AT)
+        self.assertEqual(rows[0]["unitPrice"], 180000)
+        self.assertEqual(rows[0]["quantity"], 2)
+        self.assertEqual(self.match.call_args.args, ("8화염의검 판매", 2))
+
+    def test_split_item_quote_uses_minimum_quantity_and_total(self):
+        rows, _ = collectors.parse_barotem_items(barotem_response(
+            barotem_item_row(saletype="0", min_cnt="2", work_same_cnt="10", baro_price="5000")), OBSERVED_AT)
+        self.assertEqual(rows[0]["unitPrice"], 5000)
+        self.assertEqual(rows[0]["quantity"], 2)
+        self.assertEqual(rows[0]["priceKRW"], 10000)
+
+    def test_itembay_completed_price_uses_executed_quantity(self):
+        rows, _ = collectors.parse_itembay_items(itembay_response(itembay_item_row(
+            tiSellStatus=3, iPrice=180000, biWantQuantity=1, iTranPrice=320000, biTranQuantity=2)),
+            OBSERVED_AT, "completed")
+        self.assertEqual(rows[0]["unitPrice"], 160000)
+        self.assertEqual(rows[0]["priceKRW"], 320000)
+        self.assertEqual(rows[0]["kind"], "completed")
+
+    def test_itembay_current_price_uses_corresponding_offer_quantity(self):
+        rows, _ = collectors.parse_itembay_items(itembay_response(itembay_item_row(
+            iPrice=200000, biWantQuantity=2, tranPrice="100,000", biMinQuantity=1)), OBSERVED_AT)
+        self.assertEqual(rows[0]["unitPrice"], 100000)
+
+    def test_unmapped_ambiguous_and_invalid_counts_are_separate_without_original_subject(self):
+        self.match.side_effect = [("unmapped", None), ("ambiguous", None), ("invalid", None)]
+        rows, counts = collectors.parse_barotem_items(barotem_response(
+            barotem_item_row(number="1"), barotem_item_row(number="2"), barotem_item_row(number="3")), OBSERVED_AT)
+        self.assertEqual(rows, [])
+        self.assertEqual(counts, {"unmapped": 1, "ambiguous": 1, "invalid": 1})
+        self.assertNotIn("product_name", str(counts))
+
+    def test_invalid_item_numbers_and_wrong_asset_do_not_enter_samples(self):
+        for value in [0, -1, None, True, "NaN", float("inf")]:
+            with self.subTest(value=value):
+                rows, counts = collectors.parse_itembay_items(itembay_response(
+                    itembay_item_row(biWantQuantity=value)), OBSERVED_AT)
+                self.assertEqual(rows, [])
+                self.assertEqual(counts["invalid"], 1)
+        rows, counts = collectors.parse_itembay_items(itembay_response(
+            itembay_item_row(biWantQuantity=1.5), itembay_row()), OBSERVED_AT)
+        self.assertEqual(rows, [])
+        self.assertEqual(counts["invalid"], 2)
+
+    def test_unknown_enchant_and_blessing_preserved_and_ads_deduplicated(self):
+        match = {**ITEM_MATCH, "enchant": None, "blessing": "unknown"}
+        self.match.return_value = ("mapped", match)
+        row = itembay_item_row()
+        rows, counts = collectors.parse_itembay_items(itembay_response(
+            row, copy.deepcopy(row), adverts=[itembay_item_row(iItemSeq="888888")]), OBSERVED_AT)
+        self.assertEqual(len(rows), 1)
+        self.assertIsNone(rows[0]["enchant"])
+        self.assertEqual(rows[0]["blessing"], "unknown")
+        self.assertEqual(counts["invalid"], 0)
+
+    def test_unregistered_canonical_name_rejected(self):
+        self.match.return_value = ("mapped", {**ITEM_MATCH, "itemName": "판매자 임의 제목"})
+        rows, counts = collectors.parse_itembay_items(itembay_response(itembay_item_row()), OBSERVED_AT)
+        self.assertEqual(rows, [])
+        self.assertEqual(counts["invalid"], 1)
+
+    def test_public_items_never_publish_raw_subject_or_seller_fields(self):
+        rows, _ = collectors.parse_itembay_items(itembay_response(
+            itembay_item_row(vcSubject="8화염의검 연락처 010-0000-0000 private-seller")), OBSERVED_AT)
+        self.assertEqual(rows[0]["title"], "리니지 클래식 아이템")
+        self.assertNotIn("010-0000", str(rows))
+        self.assertNotIn("private", str(rows))
+        self.assertNotIn("mappingVersion", rows[0])
+
+
+class ItemCollectionTests(unittest.TestCase):
+    def setUp(self):
+        self.matcher = patch.object(collectors, "_catalog_match", return_value=("mapped", copy.deepcopy(ITEM_MATCH)))
+        self.match = self.matcher.start()
+        self.addCleanup(self.matcher.stop)
+
+    def test_max_three_barotem_item_pages_and_unique_eligible_count(self):
+        with patch.object(collectors, "_barotem_request", return_value=barotem_response(barotem_item_row())) as request:
+            result = collectors.collect_items("barotem", pages=3)
+        self.assertEqual(request.call_count, 3)
+        self.assertEqual(request.call_args.args, (3, "2381r870"))
+        self.assertEqual(result["rawCount"], 3)
+        self.assertEqual(result["eligibleTotal"], 1)
+        self.assertEqual(result["pagesFetched"], 3)
+
+    def test_no_mapped_titles_is_successful_empty_sample_with_coverage_counts(self):
+        self.match.return_value = ("unmapped", None)
+        with patch.object(collectors, "_barotem_request", return_value=barotem_response(barotem_item_row())):
+            result = collectors.collect_items("barotem", pages=1)
+        self.assertEqual(result["listings"], [])
+        self.assertEqual(result["rawCount"], 1)
+        self.assertEqual(result["excludedCounts"]["unmapped"], 1)
+        self.assertEqual(result["rejectedCount"], 0)
+        self.assertEqual(result["pagesFetched"], 1)
+
+    def test_wrong_asset_response_is_source_failure_with_no_further_requests(self):
+        with patch.object(collectors, "_itembay_request", return_value=itembay_response(itembay_row())) as request:
+            with self.assertRaisesRegex(collectors.CollectorError, "different asset type"):
+                collectors.collect_items("itembay", pages=3)
+        self.assertEqual(request.call_count, 1)
+
+    def test_max_four_itembay_pages_separate_completed_and_asks(self):
+        responses = [itembay_response(itembay_item_row())] * 3 + [itembay_response(
+            itembay_item_row(tiSellStatus=3, iTranPrice=180000, biTranQuantity=1))]
+        with patch.object(collectors, "_itembay_request", side_effect=responses) as request:
+            result = collectors.collect_items("itembay", pages=3)
+        self.assertEqual(request.call_count, 4)
+        self.assertEqual(request.call_args.args, (1, "completed", "4"))
+        self.assertEqual(result["pagesFetched"], 4)
+        self.assertEqual(result["rawCount"], 4)
+        self.assertEqual(result["eligibleTotal"], 2)
+        self.assertEqual(result["totalListings"], 6002)
+
+    def test_items_queries_use_verified_item_category_and_type(self):
+        with patch.object(collectors, "_request_json", return_value={}) as request:
+            collectors._itembay_request(1, "ask", "4")
+        query = parse_qs(urlsplit(request.call_args.args[0]).query)
+        self.assertEqual(query["tiItemType"], ["4"])
+        self.assertTrue(request.call_args.kwargs["referer"].endswith("/type-4"))
+
+
+class ItemCatalogIntegrationTests(unittest.TestCase):
+    def test_observed_full_name_and_alias_repeat_maps_one_item_at_one_quantity(self):
+        rows, counts = collectors.parse_barotem_items(barotem_response(barotem_item_row(
+            product_name="8화검 8화염의검 팜")), OBSERVED_AT)
+        self.assertEqual(counts, {"unmapped": 0, "ambiguous": 0, "invalid": 0})
+        self.assertEqual(rows[0]["itemName"], "화염의 검")
+        self.assertEqual(rows[0]["enchant"], 8)
+
+    def test_distinct_items_or_same_item_distinct_enchantments_are_excluded(self):
+        for title in ["8화염의검 +7수정장갑 판매", "8화검 9화염의검 팜"]:
+            with self.subTest(title=title):
+                rows, counts = collectors.parse_barotem_items(barotem_response(
+                    barotem_item_row(product_name=title)), OBSERVED_AT)
+                self.assertEqual(rows, [])
+                self.assertEqual(counts["ambiguous"], 1)
+
+    def test_declared_same_item_quantity_must_agree_with_source_quantity(self):
+        rows, counts = collectors.parse_barotem_items(barotem_response(barotem_item_row(
+            product_name="8화검 2개 판매", single_unit="1 개")), OBSERVED_AT)
+        self.assertEqual(rows, [])
+        self.assertEqual(counts["ambiguous"], 1)
+        rows, counts = collectors.parse_barotem_items(barotem_response(barotem_item_row(
+            product_name="8화검 2개 판매", single_unit="2 개", baro_price="360000")), OBSERVED_AT)
+        self.assertEqual(counts["ambiguous"], 0)
+        self.assertEqual(rows[0]["unitPrice"], 180000)
+
+
 if __name__ == "__main__":
     unittest.main()
