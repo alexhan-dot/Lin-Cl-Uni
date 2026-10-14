@@ -12,6 +12,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from .item_store import ItemStoreMixin
+
 
 SOURCES = (
     {"id": "barotem", "name": "바로템", "sourceUrl": "https://www.barotem.com/product/lists/2382r902"},
@@ -94,14 +96,15 @@ def _median(values):
     return statistics.median(values) if values else None
 
 
-class Store:
-    def __init__(self, data_dir, interval_seconds=600, pages_per_source=3):
+class Store(ItemStoreMixin):
+    def __init__(self, data_dir, interval_seconds=600, pages_per_source=3, item_interval_seconds=3600):
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(parents=True, exist_ok=True)
         self.db_path = self.data_dir / "prices.sqlite3"
         self.interval_seconds = int(interval_seconds)
         self.pages_per_source = int(pages_per_source)
-        if self.interval_seconds <= 0 or not 1 <= self.pages_per_source <= 3:
+        self.item_interval_seconds = int(item_interval_seconds)
+        if self.interval_seconds <= 0 or self.item_interval_seconds <= 0 or not 1 <= self.pages_per_source <= 3:
             raise ValueError("Invalid sampling configuration")
         with self._connect() as connection:
             connection.executescript("""
@@ -136,7 +139,7 @@ class Store:
     def load_snapshot(self):
         with self._connect() as connection:
             row = connection.execute("SELECT value FROM metadata WHERE key='snapshot'").fetchone()
-        return json.loads(row[0]) if row else None
+        return self._with_items(json.loads(row[0])) if row else None
 
     def seed_snapshot(self, previous):
         """Import a published sample without pretending it was collected again.
@@ -179,6 +182,8 @@ class Store:
         listings = [row for rows in valid_by_source.values() for row in rows]
         if not listings:
             raise ValueError("Previous snapshot has no usable prices")
+        if "items" in previous:
+            self.seed_item_snapshot(previous["items"], currency_generated_at=generated_at)
         states = []
         for source in SOURCES:
             source_id = source["id"]
@@ -227,7 +232,7 @@ class Store:
             if existing_row:
                 existing = json.loads(existing_row[0])
                 if existing.get("listings") and existing.get("generatedAt", "") >= generated_at:
-                    return existing
+                    return self._with_items(existing)
             for state in states:
                 rows = valid_by_source.get(state["id"], [])
                 if not rows:
@@ -246,7 +251,7 @@ class Store:
                 server["history"] = [{"at": row[0], "value": row[1], "kind": row[2]} for row in reversed(points)]
             payload = self._payload(listings, states, servers, generated_at, next_update_at)
             connection.execute("INSERT INTO metadata VALUES('snapshot',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value", (encode_json(payload).decode(),))
-        return payload
+        return self._with_items(payload)
 
     def empty_snapshot(self, now=None, next_update_at=None):
         now = timestamp(now)
@@ -351,7 +356,7 @@ class Store:
                 server["historyKind"] = "ask" if server["askMedian"] is not None else "completed"
             payload = self._payload(all_listings, source_states, servers, now, next_update_at)
             connection.execute("INSERT INTO metadata VALUES('snapshot',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value", (encode_json(payload).decode(),))
-        return payload
+        return self._with_items(payload)
 
     def _aggregate(self, listings, sources):
         states = {source["id"]: source for source in sources}

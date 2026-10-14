@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="리니지 클래식 서버별 아데나 판매 호가와 거래완료 표시 가격을 비교하세요. 거래소 공개 매물을 10분마다 수집합니다.">
+  <meta name="description" content="리니지 클래식 아데나와 아이템 가격을 비교하세요. 아데나는 10분, 아이템은 1시간 간격 수집을 목표로 합니다.">
   <meta name="theme-color" content="#102127">
-  <title>클래식 시세판 · 리니지 클래식 아데나 시세</title>
+  <title>클래식 시세판 · 리니지 클래식 아데나·아이템 시세</title>
   <link rel="stylesheet" href="market.css">
   <script src="market.js" defer></script>
 </head>
@@ -17,21 +17,26 @@
         <span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 28 28"><path d="M5 20V8M11 20V13M17 20V5M23 20V10"/><path class="symbol-line" d="m4 12 7-5 6 3 7-7"/></svg></span>
         <strong>클래식 시세판</strong><span class="beta">BETA</span>
       </a>
-      <nav aria-label="주요 메뉴"><a href="#server-board" class="nav-active">아데나 시세</a><a href="#market-list">거래소 매물</a><a href="academy.html">육성 상담 <span aria-hidden="true">↗</span></a></nav>
-      <span class="header-badge"><span class="status-dot" aria-hidden="true"></span>10분 수집 주기</span>
+      <nav aria-label="주요 메뉴"><a href="#server-board" class="nav-active">아데나 시세</a><a href="#market-panels" data-open-market="items">아이템 시세</a><a href="academy.html">육성 상담 <span aria-hidden="true">↗</span></a></nav>
+      <span class="header-badge"><span class="status-dot" aria-hidden="true"></span>아데나 10분 · 아이템 1시간</span>
     </div>
   </header>
 
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-inner">
-        <div class="hero-copy"><p class="eyebrow">LINEAGE CLASSIC · MARKET WATCH</p><h1 id="hero-title">서버별 아데나 가격을<br><span>한눈에.</span></h1><p class="hero-lede">흩어져 있는 거래소의 가격을 한곳에서 비교하세요.<br>판매 호가와 거래완료 표시 가격을 구분해서 보여드립니다.</p><a class="hero-link" href="#server-board">내 서버 시세 확인하기 <span aria-hidden="true">↓</span></a></div>
+        <div class="hero-copy"><p class="eyebrow">LINEAGE CLASSIC · MARKET WATCH</p><h1 id="hero-title">서버별 게임 시세를<br><span>한눈에.</span></h1><p class="hero-lede">아데나와 아이템 가격을 한곳에서 비교하세요.<br>판매 호가와 거래완료 표시 가격을 구분해서 보여드립니다.</p><a class="hero-link" href="#server-board">내 서버 시세 확인하기 <span aria-hidden="true">↓</span></a></div>
         <div class="hero-visual" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><div class="hero-coin">A<span>ADENA</span></div><span class="visual-tag tag-one"><i></i> 거래소 비교</span><span class="visual-tag tag-two">₩ / 100만 아데나</span><svg class="hero-spark" viewBox="0 0 350 90"><path d="M0 73 40 63 80 67 120 42 160 49 200 24 235 35 275 14 315 20 350 4"/></svg></div>
       </div>
       <div class="hero-footer"><span><span class="status-dot" aria-hidden="true"></span><span id="collection-status">첫 수집 결과를 불러오는 중</span></span><span id="last-update">최근 수집 —</span><span id="next-update">다음 수집 —</span></div>
     </section>
 
-    <div class="content-shell">
+    <div class="content-shell" id="market-panels">
+      <div class="market-category-tabs" role="tablist" aria-label="시세 종류">
+        <button id="adena-tab" type="button" role="tab" aria-selected="true" aria-controls="adena-panel" tabindex="0" data-market-tab="adena"><span>아데나 시세</span><small>10분 갱신 목표</small></button>
+        <button id="items-tab" type="button" role="tab" aria-selected="false" aria-controls="items-panel" tabindex="-1" data-market-tab="items"><span>아이템 시세</span><small>1시간 갱신 목표</small></button>
+      </div>
+      <div id="adena-panel" role="tabpanel" aria-labelledby="adena-tab">
       <div class="notice" id="global-notice" role="status" hidden></div>
       <section class="source-strip" aria-label="거래소별 수집 상태" id="source-status"></section>
 
@@ -65,8 +70,29 @@
         <p class="listing-disclaimer">표시 가격은 참고용입니다. 실제 구매 가능 수량, 최소 구매금액, 수수료와 매물 상태는 거래소 원문에서 확인하세요.</p>
       </section>
 
+      </div>
+      <div id="items-panel" role="tabpanel" aria-labelledby="items-tab" hidden>
+        <section class="item-intro" aria-labelledby="items-title"><div><p class="section-kicker">ITEM MARKET</p><h2 id="items-title">같은 아이템, 같은 조건으로.</h2><p>품목명과 확인된 별칭으로 찾고, 서버·강화·축복 상태가 같은 매물끼리 비교하세요.</p></div><span class="item-interval">1시간 수집 목표</span></section>
+        <div class="item-timing" aria-label="아이템 수집 일정"><span id="item-last-update">아이템 최근 수집 —</span><span id="item-next-update">다음 아이템 수집 —</span></div>
+        <div id="item-notice" class="notice" role="status" hidden></div>
+        <section id="item-source-status" class="source-strip" aria-label="아이템 거래소별 수집 상태"></section>
+        <section class="overview item-overview" aria-label="아이템 수집 요약">
+          <div class="metric"><span class="metric-label">수집된 품목</span><strong id="item-metric-names">—</strong><span class="metric-note">품목마다 다른 가격을 별도로 비교</span></div>
+          <div class="metric"><span class="metric-label">동일 조건 비교군</span><strong id="item-metric-groups">—</strong><span class="metric-note">서버 · 품목 · 강화 · 축복 기준</span></div>
+          <div class="metric"><span class="metric-label">판매 호가 매물</span><strong id="item-metric-asks">—</strong><span class="metric-note">1개당 원화 가격으로 비교</span></div>
+          <div class="metric"><span class="metric-label">거래완료 표시 매물</span><strong id="item-metric-completed">—</strong><span class="metric-note">플랫폼 완료 표시 · 체결시각 미확인</span></div>
+        </section>
+        <section class="section" aria-labelledby="item-board-title"><div class="section-heading"><div><p class="section-kicker">LIKE-FOR-LIKE PRICES</p><h2 id="item-board-title">아이템별 비교</h2></div><span class="section-description">같은 조건의 중앙값 · 1개당 원</span></div>
+          <div class="item-controls"><label class="search-field"><svg aria-hidden="true" viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg><span class="sr-only">아이템 품목명 또는 별칭 검색</span><input id="item-search-input" type="search" placeholder="품목명 또는 별칭 검색" autocomplete="off"></label><label class="select-field"><span class="sr-only">아이템 서버 선택</span><select id="item-server-filter"><option value="all">전체 서버</option></select></label><label class="select-field"><span class="sr-only">아이템 품목 선택</span><select id="item-name-filter"><option value="all">전체 품목</option></select></label><label class="select-field"><span class="sr-only">아이템 강화 선택</span><select id="item-enchant-filter"><option value="all">모든 강화</option></select></label><label class="select-field"><span class="sr-only">아이템 축복 상태 선택</span><select id="item-blessing-filter"><option value="all">모든 축복 상태</option><option value="normal">일반</option><option value="blessed">축복</option><option value="cursed">저주</option><option value="unknown">미확인</option></select></label></div>
+          <p class="item-condition-note">강화나 축복 상태가 확인되지 않은 매물은 미확인 조건으로 분리합니다. 서로 다른 조건의 가격을 합치지 않습니다.</p>
+          <div class="item-group-grid" id="item-group-grid"><p class="empty-state">실제 아이템 수집 결과를 준비하고 있습니다.</p></div><p id="item-coverage-note" class="coverage-note">일부 공개 매물 기준입니다. 수집되지 않은 아이템의 가격은 표시하지 않습니다.</p>
+        </section>
+        <section class="panel item-comparison-panel" aria-labelledby="item-comparison-title"><div class="panel-heading"><div><p class="section-kicker">SAME ITEM · SAME CONDITIONS</p><h2 id="item-comparison-title" tabindex="-1">거래소별 아이템 비교</h2></div><span id="item-comparison-label" class="server-pill">비교군 선택</span></div><p class="item-selected-condition" id="item-selected-condition">위 카드에서 같은 조건의 비교군을 선택하세요.</p><div id="item-source-comparison" class="comparison-list"></div><p class="panel-footnote">원문에서 귀속 여부, 구매 조건과 매물 상태를 추가로 확인하세요.</p></section>
+        <details class="item-catalog"><summary><span>품목명·별칭 기준 확인</span><small id="item-catalog-summary">확인 상태 준비 중</small></summary><p>확인된 별칭을 기준 품목명에 연결합니다. 공식 자료로 확인한 이름은 별도로 표시하고, 확인이 끝나지 않은 품목은 대기 상태로 표시합니다.</p><div id="item-catalog-list"></div></details>
+        <section class="section" aria-labelledby="item-listings-title"><div class="section-heading"><div><p class="section-kicker">COLLECTED ITEM LISTINGS</p><h2 id="item-listings-title">수집한 아이템 매물</h2></div><span id="item-listing-count" class="section-description">0개 매물</span></div><div class="list-controls"><div class="filter-tabs" role="group" aria-label="아이템 매물 종류 선택"><button type="button" data-item-kind="all" aria-pressed="true">전체</button><button type="button" data-item-kind="ask" aria-pressed="false">판매 호가</button><button type="button" data-item-kind="completed" aria-pressed="false">거래완료 표시</button></div><label class="sort-control"><span>정렬</span><select id="item-sort-filter"><option value="name">품목명 순</option><option value="price-asc">개당 가격 낮은 순</option><option value="price-desc">개당 가격 높은 순</option><option value="recent">최근 수집 순</option></select></label></div><div class="table-wrap"><table class="listing-table item-listing-table"><caption class="sr-only">아이템 품목명, 서버, 강화 및 축복 상태, 거래소, 구분, 개당 가격, 수량, 수집 시각과 원문 링크</caption><thead><tr><th scope="col">품목 / 서버</th><th scope="col">강화 / 축복</th><th scope="col">거래소</th><th scope="col">구분</th><th scope="col" class="number-cell">1개당 가격</th><th scope="col" class="number-cell">수량</th><th scope="col">수집 시각</th><th scope="col"><span class="sr-only">원문</span></th></tr></thead><tbody id="item-listing-body"><tr><td colspan="8" class="table-empty">첫 아이템 수집 결과를 기다리고 있습니다.</td></tr></tbody></table></div><p class="listing-disclaimer">같은 품목도 옵션·귀속·수수료에 따라 구매 조건이 달라질 수 있습니다. 거래소 원문에서 최종 조건을 확인하세요.</p></section>
+      </div>
       <aside class="promotion" aria-labelledby="promotion-title"><div class="promotion-mark" aria-hidden="true">LC</div><div class="promotion-copy"><span class="promotion-label">육성 서비스 안내</span><h2 id="promotion-title">시세 확인 다음은, 내 캐릭터 성장 계획.</h2><p>리니지 클래식 대학교에서 육성 과정과 상담 안내를 확인하세요.</p></div><a class="promotion-link" href="academy.html">육성 상담 알아보기 <span aria-hidden="true">↗</span></a></aside>
-      <section class="method-note" aria-labelledby="method-title"><h2 id="method-title">시세판 읽는 방법</h2><div><p><strong>판매 호가</strong> 판매자가 등록한 가격입니다. 실제로 거래된 가격을 의미하지 않습니다.</p><p><strong>거래완료 표시</strong> 거래소에서 완료로 표시한 매물입니다. 실제 체결시각은 확인되지 않을 수 있습니다.</p><p><strong>수집 범위</strong> 일부 공개 매물 기준이며 광고·중복 매물과 구매 조건에 따라 차이가 생길 수 있습니다. 10분 수집을 목표로 하며 출처 지연 시 이전 값과 수집 상태를 표시합니다.</p></div></section>
+      <section class="method-note" aria-labelledby="method-title"><h2 id="method-title">시세판 읽는 방법</h2><div><p><strong>판매 호가</strong> 판매자가 등록한 가격입니다. 실제로 거래된 가격을 의미하지 않습니다.</p><p><strong>거래완료 표시</strong> 거래소에서 완료로 표시한 매물입니다. 실제 체결시각은 확인되지 않을 수 있습니다.</p><p><strong>수집 범위</strong> 일부 공개 매물 기준이며 광고·중복 매물과 구매 조건에 따라 차이가 생길 수 있습니다. 아데나는 10분, 아이템은 1시간 수집을 목표로 하며 출처 지연 시 이전 값과 수집 상태를 표시합니다.</p></div></section>
     </div>
   </main>
   <footer class="site-footer"><a class="footer-brand" href="#main">클래식 시세판 <span>BETA</span></a><p>리니지 클래식 팬 제작 가격 정보 · 각 거래소 및 게임사와 무관합니다.</p><span>가격을 비교하고, 더 나은 선택을.</span></footer>

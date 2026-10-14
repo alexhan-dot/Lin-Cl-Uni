@@ -23,7 +23,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,6 +44,7 @@ jobs:
           python3 scripts/refresh_static.py \
             --previous-url "${PREVIOUS_BASE_URL%/}/test/data/prices.json" \
             --data-dir .market-data \
+            --item-interval 3600 \
             --output .market-data/prices.json
 
       - name: Build landing and market test pages
